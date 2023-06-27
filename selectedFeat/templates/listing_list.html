@@ -1,0 +1,411 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <title>Events</title>
+    <style>
+        .div-explainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0px;
+            gap: 4px;
+            margin-left: 112px;
+            margin-top: 100px;
+
+            width: 1035px;
+            height: 86px;
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+        .div-explainer-1 {
+            width: 1035px;
+            height: 32px;
+
+            font-style: normal;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 32px;
+
+            letter-spacing: -0.3px;
+
+            color: #2D3643;
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+        .div-explainer-2 {
+            width: 1035px;
+            height: 50px;
+
+            font-style: normal;
+            font-weight: 700;
+            font-size: 36px;
+            line-height: 50px;
+
+            letter-spacing: -1px;
+
+            color: #2D3643;
+
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-row {
+            display: flex;
+            flex-direction: row;
+            align-self: center;
+            padding: 0px;
+            gap: 68px;
+            flex-wrap: wrap;
+            width: 1120px;
+        }
+
+        .card-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            gap: 12px;
+
+            width: 328px;
+            height: fit-content;
+
+            /* Colors/Primary/Primary/25 */
+            background: #F2F5FF;
+            /* Shadow / md */
+            box-shadow: 0px 4px 8px -2px rgba(45, 54, 67, 0.08), 0px 2px 4px -2px rgba(45, 54, 67, 0.06);
+            border-radius: 16px;
+
+            /* Inside auto layout */
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+        .image {
+            width: 409.37px;
+            height: 338.5px;
+            object-fit: cover;
+        }
+
+        img {
+            border-radius: 10px;
+        }
+
+        .btn-secondary {
+            width: 100px;
+            height: 35px;
+        }
+
+        .pagination a,
+        .pagination span {
+            display: inline-block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .current-page {
+            display: inline-block;
+            padding: 10px;
+        }
+
+        .prev-link,
+        .next-link,
+        .first-link,
+        .last-link {
+            font-size: 26px;
+        }
+
+        .card-grid {
+            display: grid;
+            width: 984px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .small-card {
+            width: 323px;
+            height: 73px;
+            background-color: rgba(242, 245, 255, 1);
+            margin: 5px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .small-card:hover,
+        .card-column:hover {
+            transform: scale(1.05);
+            transition: transform 0.4s ease-in-out;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .small-card-image {
+            width: 72px;
+            height: 73px;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            overflow: hidden;
+        }
+
+        .small-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .small-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8px;
+        }
+
+        .small-card-title {
+            font-family: Poppins;
+            font-weight: bold;
+            font-size: 14px;
+            color: rgba(45, 54, 67, 1);
+            margin: 0;
+            padding: 0;
+        }
+
+        .small-card-listings {
+            font-family: Poppins;
+            font-weight: medium;
+            font-size: 14px;
+            color: rgba(135, 151, 174, 1);
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 50px; margin-bottom: 0px;">
+        <div style="width: 1041px; height: 470px; border-radius: 12px; overflow: hidden;">
+            <img src="{{ event_banner_url }}" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+    </div>
+    <div class="div-explainer" style="margin-bottom: 40px;">
+        <div class="div-explainer-1">Listings in</div>
+        <div class="div-explainer-2">{{ event_name }}</div>
+    </div>
+    <div class="container" style="justify-content: center;">
+        <div class="row" style="margin-bottom: 30px;">
+            <div class="col-md-12 text-center">
+                <div class="btn-group mb-3" role="group" aria-label="Category filter">
+                    {% for category in category_filters %}
+                    <button type="button" class="btn btn-secondary mr-2 rounded" id="category-{{ category }}"
+                        data-filter="{{ category }}">{{ category }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row" style="justify-content: center;">
+            {% if listings %}
+            <div id="filtered-listings">
+                <div class="card-row">
+                    {% for j in listings %}
+                    <a href="/listing/{{j.id}}" style="text-decoration: none; color: inherit;">
+                        <div class="card-column">
+                            <div>
+
+                                <img src="{{ event_image_url }}" class="image" style="width: 288px; height: 144px;">
+                                <div class="column mt-2" style="padding-top: 12px;">
+                                    <h4 style="color: #3D4A5C;"><strong>{{ event_name }}</strong></h4>
+                                    <h6 style="font-weight: bold;">
+                                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M5.70833 2.9165C3.41666 2.9165 3.41666 3.08984 3.41666 5.20817V5.229C3.41666 6.1515 3.41666 6.81817 3.6425 7.09984C3.86333 7.37317 4.51916 7.49984 5.70833 7.49984C6.8975 7.49984 7.55333 7.37234 7.77416 7.099C8 6.81817 8 6.1515 8 5.22817C8 3.08984 8 2.9165 5.70833 2.9165M5.70833 8.74984C4.30333 8.74984 3.24916 8.60234 2.67 7.88317C2.16666 7.259 2.16666 6.40734 2.16666 5.229L2.79166 5.20817H2.16666C2.16666 2.8165 2.3175 1.6665 5.70833 1.6665C9.09916 1.6665 9.25 2.8165 9.25 5.20817C9.25 6.4065 9.25 7.259 8.74666 7.88317C8.1675 8.60234 7.11333 8.74984 5.70833 8.74984"
+                                                fill="#3D4A5C" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M14.875 2.9165C12.5833 2.9165 12.5833 3.08984 12.5833 5.20817V5.229C12.5833 6.1515 12.5833 6.81817 12.8092 7.09984C13.03 7.37317 13.6858 7.49984 14.875 7.49984C16.0642 7.49984 16.72 7.37234 16.9408 7.099C17.1667 6.81817 17.1667 6.1515 17.1667 5.22817C17.1667 3.08984 17.1667 2.9165 14.875 2.9165M14.875 8.74984C13.47 8.74984 12.4158 8.60234 11.8367 7.88317C11.3333 7.259 11.3333 6.40734 11.3333 5.229L11.9583 5.20817H11.3333C11.3333 2.8165 11.4842 1.6665 14.875 1.6665C18.2658 1.6665 18.4167 2.8165 18.4167 5.20817C18.4167 6.4065 18.4167 7.259 17.9133 7.88317C17.3342 8.60234 16.28 8.74984 14.875 8.74984"
+                                                fill="#3D4A5C" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M5.70833 12.083C3.41666 12.083 3.41666 12.2563 3.41666 14.3747V14.3955C3.41666 15.318 3.41666 15.9847 3.6425 16.2663C3.86333 16.5397 4.51916 16.6663 5.70833 16.6663C6.8975 16.6663 7.55333 16.5388 7.77416 16.2655C8 15.9847 8 15.318 8 14.3947C8 12.2563 8 12.083 5.70833 12.083M5.70833 17.9163C4.30333 17.9163 3.24916 17.7688 2.67 17.0497C2.16666 16.4255 2.16666 15.5738 2.16666 14.3955L2.79166 14.3747H2.16666C2.16666 11.983 2.3175 10.833 5.70833 10.833C9.09916 10.833 9.25 11.983 9.25 14.3747C9.25 15.573 9.25 16.4255 8.74666 17.0497C8.1675 17.7688 7.11333 17.9163 5.70833 17.9163"
+                                                fill="#3D4A5C" />
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                d="M14.875 12.083C12.5833 12.083 12.5833 12.2563 12.5833 14.3747V14.3955C12.5833 15.318 12.5833 15.9847 12.8092 16.2663C13.03 16.5397 13.6858 16.6663 14.875 16.6663C16.0642 16.6663 16.72 16.5388 16.9408 16.2655C17.1667 15.9847 17.1667 15.318 17.1667 14.3947C17.1667 12.2563 17.1667 12.083 14.875 12.083M14.875 17.9163C13.47 17.9163 12.4158 17.7688 11.8367 17.0497C11.3333 16.4255 11.3333 15.5738 11.3333 14.3955L11.9583 14.3747H11.3333C11.3333 11.983 11.4842 10.833 14.875 10.833C18.2658 10.833 18.4167 11.983 18.4167 14.3747C18.4167 15.573 18.4167 16.4255 17.9133 17.0497C17.3342 17.7688 16.28 17.9163 14.875 17.9163"
+                                                fill="#3D4A5C" />
+                                        </svg>
+                                        {{ j.category }}</h6>
+                                    <h6>
+                                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M3.625 6.875H17.375M14.25 1.875V4.375M6.75 1.875V4.375M4.25 3.125H16.75C17.0952 3.125 17.375 3.40482 17.375 3.75V16.25C17.375 16.5952 17.0952 16.875 16.75 16.875H4.25C3.90482 16.875 3.625 16.5952 3.625 16.25V3.75C3.625 3.40482 3.90482 3.125 4.25 3.125Z"
+                                                stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                        {{ event_date }}</h6>
+                                    <h6>
+                                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M10.5 10.625C11.8807 10.625 13 9.50571 13 8.125C13 6.74429 11.8807 5.625 10.5 5.625C9.11929 5.625 8 6.74429 8 8.125C8 9.50571 9.11929 10.625 10.5 10.625Z"
+                                                stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M16.75 8.125C16.75 13.75 10.5 18.125 10.5 18.125C10.5 18.125 4.25 13.75 4.25 8.125C4.25 6.4674 4.90848 4.87768 6.08058 3.70558C7.25268 2.53348 8.8424 1.875 10.5 1.875C12.1576 1.875 13.7473 2.53348 14.9194 3.70558C16.0915 4.87768 16.75 6.4674 16.75 8.125Z"
+                                                stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                        </svg>
+                                        {{ event_venue }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <p>{{ no_listings_message }}</p>
+            {% endif %}
+            <div class="pagination">
+                <div class="first-link">
+                    {% if listings.has_previous %}
+                    <a href="?page=1">&laquo;</a>
+                    {% else %}
+                    <span style="color: gray;">&laquo;</span>
+                    {% endif %}
+                </div>
+                <div class="prev-link">
+                    {% if listings.has_previous %}
+                    <a href="?page={{ listings.previous_page_number }}">&lsaquo;</a>
+                    {% else %}
+                    <span style="color: gray;">&lsaquo;</span>
+                    {% endif %}
+                </div>
+                <div class="current-page" style="margin-top: 12px; font-weight: bold; font-size: 12px;">
+                    {{ listings.number }} of {{ listings.paginator.num_pages }}
+                </div>
+                <div class="next-link">
+                    {% if listings.has_next %}
+                    <a href="?page={{ listings.next_page_number }}">&rsaquo;</a>
+                    {% else %}
+                    <span style="color: gray;">&rsaquo;</span>
+                    {% endif %}
+                </div>
+                <div class="last-link">
+                    {% if listings.has_next %}
+                    <a href="?page={{ listings.paginator.num_pages }}">&raquo;</a>
+                    {% else %}
+                    <span style="color: gray;">&raquo;</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="div-explainer" style="margin-top: 100px;">
+        <div class="div-explainer-2">See other events</div>
+    </div>
+    <div class="card-grid">
+        {% for event in list_event %}
+        {% if event.title != event_name %}
+        <a href="/events/{{ event.title }}/listings" style="text-decoration: none;">
+            <div class="small-card">
+                <div class="small-card-image">
+                    <img src="{{ event.image_url }}">
+                </div>
+                <div class="small-card-content">
+                    <h2 class="small-card-title">{{ event.title }}</h2>
+                    <p class="small-card-listings">{{ event.num_listings }} Listings</p>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 25px;">
+        <a href="{% url 'event_list' %}" class="btn btn-primary" style="background-color: #1B4DFF;">See more</a>
+    </div>
+
+    <script>
+        const navsignin = document.getElementById('nav-tiket')
+        navsignin.style.color = "#3044ff";
+
+        var prevButton;
+
+        $(document).ready(function () {
+            $('button[id^="category-"]').click(function () {
+                var currColor = $(this).css('background-color');
+                if (prevButton) {
+                    prevButton.css('background-color', '');
+                }
+                $(this).css('background-color', '#3044ff');
+                prevButton = $(this);
+                const selectedCategory = $(this).data('filter');
+                $.ajax({
+                    url: "{% url 'listing_list_filtered' event_name selected_category %}",
+                    type: "GET",
+                    data: {
+                        category: selectedCategory
+                    },
+                    success: function (response) {
+                        $('#filtered-listings').html(response.html);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+            $('#category-all').click(function () {
+                var currColor = $(this).css('background-color');
+                if (prevButton) {
+                    prevButton.css('background-color', '');
+                }
+                $(this).css('background-color', '#3044ff');
+                prevButton = $(this);
+                $.ajax({
+                    url: "{% url 'listing_list' event_name %}",
+                    type: "GET",
+                    success: function (response) {
+                        $('#filtered-listings').html(response.html);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
+{% endblock %}

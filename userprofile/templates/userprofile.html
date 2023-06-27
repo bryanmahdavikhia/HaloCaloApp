@@ -1,0 +1,402 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <style>
+      .container-profile {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 100px;
+        margin-top: 80px;
+        margin-bottom: 100px;
+      }
+
+      .container-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 120px;
+        gap: 64px;
+
+        width: 1038px;
+        height: 255px;
+
+/* Inside auto layout */
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+      }
+
+
+      .info-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 20px;
+
+        width: 510px;
+        height: 252px;
+
+
+        background: #F2F5FF;
+        border-radius: 16px;
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+      }
+
+      h3#headline {
+        font-weight: 700;
+        font-size: 32px;
+        line-height: 30px;
+        padding-bottom: 32px;
+      }
+      
+      button {
+        display: inline-block;
+        background-color: #1B4DFF;
+        color: white;
+        border-radius: 8px;
+        border: none;
+        width: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+
+      button:hover {
+        background-color: #4D90FE; /* Change the background color when hovering */
+        cursor: pointer; /* Change the cursor to a pointer when hovering */
+      }
+
+      .image {
+        width: 409.37px;
+        height: 338.5px;
+        object-fit: cover;
+      }
+
+      img {
+        border-radius: 10px;
+        border: 2px solid #94ABFF; 
+      }
+
+      .card-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        gap: 12px;
+
+        width: 328px;
+        height: fit-content;
+
+        /* Colors/Primary/Primary/25 */
+        background: #F2F5FF;
+        /* Shadow / md */
+        box-shadow: 0px 4px 8px -2px rgba(45, 54, 67, 0.08), 0px 2px 4px -2px rgba(45, 54, 67, 0.06);
+        border-radius: 16px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+      }
+
+      .card-column:hover{
+        transform: scale(1.05);
+        transition: transform 0.4s ease-in-out;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-row {
+        display: flex;
+        flex-direction: row;
+        align-self: center;
+        padding: 0px;
+        gap: 68px;
+        flex-wrap: wrap;
+        width: 1120px;
+        margin-top: -50px;
+      }
+
+      .no-listing {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 20px;
+
+        width: 800px;
+        height: 255px;
+
+
+        background: #F2F5FF;
+        border-radius: 16px;
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+      }
+
+    </style>
+
+    <div class="container-profile"> <!-- container all -->
+      <div style="margin-left: auto; margin-right: auto; display: flex; gap: 40px;">
+
+        <div class="info-card">
+          <h3 id="headline"><strong>My Profile</strong></h3>
+          <div class="number-email" style="width: 100%; height: 100%; position: relative;">
+            <strong>{{userdata.first_name}} {{userdata.last_name}}</strong>
+            @{{userdata.username}}
+            <br>
+            <div class="number-email">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.22471 9.75133C7.87302 11.0767 8.94739 12.1462 10.2758 12.7885C10.3729 12.8346 10.4804 12.8545 10.5877 12.8464C10.6949 12.8383 10.7982 12.8024 10.8874 12.7422L12.8433 11.438C12.9298 11.3803 13.0293 11.3451 13.1328 11.3356C13.2364 11.3261 13.3407 11.3426 13.4362 11.3835L17.0954 12.9517C17.2197 13.0045 17.3234 13.0963 17.3911 13.2132C17.4587 13.3301 17.4865 13.4658 17.4702 13.5999C17.3546 14.5049 16.913 15.3367 16.2282 15.9396C15.5434 16.5425 14.6624 16.8751 13.75 16.8751C10.9321 16.8751 8.22956 15.7557 6.23699 13.7631C4.24442 11.7706 3.125 9.06806 3.125 6.25014C3.12505 5.33777 3.45765 4.45671 4.06053 3.77192C4.66341 3.08712 5.49523 2.64556 6.40023 2.5299C6.53431 2.51368 6.67002 2.54146 6.78693 2.60908C6.90384 2.67669 6.99561 2.78046 7.04841 2.90476L8.61798 6.5671C8.65858 6.66183 8.67512 6.76513 8.66614 6.8678C8.65715 6.97047 8.62291 7.06932 8.56647 7.15556L7.26676 9.14147C7.2076 9.23081 7.17263 9.33396 7.16526 9.44085C7.15789 9.54775 7.17837 9.65472 7.22471 9.75133V9.75133Z" stroke="#2D3643" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>                          
+              {{userdata.tel_number}}
+              <p>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.5 4.375L10 11.25L2.5 4.375M17.5 4.375H2.5M17.5 4.375V15C17.5 15.1658 17.4342 15.3247 17.3169 15.4419C17.1997 15.5592 17.0408 15.625 16.875 15.625H3.125C2.95924 15.625 2.80027 15.5592 2.68306 15.4419C2.56585 15.3247 2.5 15.1658 2.5 15V4.375M17.3074 15.4484L11.3636 9.99997M8.63636 10L2.69272 15.4484" stroke="#2D3643" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>                               
+                {{userdata.email}}</p>
+            </div>
+            <button onclick="window.location.href='/signin/logout'" style="position: absolute; bottom: 0; right: 0; background-color: #ff0000;">Sign Out</button>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <h3 id="headline"><strong>Seller Status</strong></h3>
+          <div class="number-email" style="width: 100%; height: 100%; position: relative;">
+            {% if userdata.status == '1_verified' %}
+            <strong style="color: #1DB469; font-style: italic;">Verified</strong>
+            <br>
+            Your Seller Verification Documents have been accepted. Press the Add a Listing Button to start listing tickets!
+            <button onclick="window.location.href='/upload/listing-documents'" style="position: absolute; bottom: 0; right: 0;">Add a Listing</button>
+            {% elif userdata.status == '0_on_process' %}
+            <strong style="color: #8897AE; font-style: italic;">On verifying process</strong>
+            <br>
+            Your Seller Verification Documents are still being processed. Please give our team some time to process them.
+            {% elif userdata.status == '2_rejected' %}
+            <strong style="color: #FF574D; font-style: italic;">Rejected</strong>
+            <br>
+            {{userdata.notes}}
+            <button onclick="window.location.href='/upload/verification-documents'" style="position: absolute; bottom: 0; right: 0;">Resubmit Documents</button>
+            {% else %}
+            <strong style="color: #8897AE; font-style: italic;">Not Registered</strong>
+            <br>
+            You have not yet registered to be a seller, please follow our verification process to become one!
+            <button onclick="window.location.href='/upload/verification-documents'" style="position: absolute; bottom: 0; right: 0;">Become a Seller</button>
+            {% endif %}
+          </div>
+        </div>
+
+      </div> <!-- container card profile -->
+
+      <div style="width: 1120px; align-self: center; text-align: left;">
+        <h3 id="headline" style="align-self: center; margin-bottom: -35px;"><strong>Active Listings</strong></h3>
+      </div>
+
+      {% if activelistings|length != 0 %}
+      <div class="card-row">
+        {% for j in activelistings %}
+          <!-- card row -->
+            <a href="/listing/{{j.id}}" style="text-decoration: none; color: inherit;">
+              <div class="card-column">
+                <div>
+                  <img src={{j.image_url}} class="image" style="width: 288px; height: 144px;">
+                  <div class="column mt-2" style="padding-top: 12px;">
+                    <h4 style="color: #3D4A5C;"><strong>{{j.title}}</strong></h4>
+                    {% if j.is_sold %}
+                    <h6 style="color: #FF574D; display: inline-block;"><i>Sold</i></h6>
+                    {% else %}
+                    <h6 style="color: #1DB469; display: inline-block;"><i>Available</i></h6>
+                    {% endif %}
+                    <h6 style="font-weight: bold;">
+                      <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.70833 2.9165C3.41666 2.9165 3.41666 3.08984 3.41666 5.20817V5.229C3.41666 6.1515 3.41666 6.81817 3.6425 7.09984C3.86333 7.37317 4.51916 7.49984 5.70833 7.49984C6.8975 7.49984 7.55333 7.37234 7.77416 7.099C8 6.81817 8 6.1515 8 5.22817C8 3.08984 8 2.9165 5.70833 2.9165M5.70833 8.74984C4.30333 8.74984 3.24916 8.60234 2.67 7.88317C2.16666 7.259 2.16666 6.40734 2.16666 5.229L2.79166 5.20817H2.16666C2.16666 2.8165 2.3175 1.6665 5.70833 1.6665C9.09916 1.6665 9.25 2.8165 9.25 5.20817C9.25 6.4065 9.25 7.259 8.74666 7.88317C8.1675 8.60234 7.11333 8.74984 5.70833 8.74984" fill="#3D4A5C"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 2.9165C12.5833 2.9165 12.5833 3.08984 12.5833 5.20817V5.229C12.5833 6.1515 12.5833 6.81817 12.8092 7.09984C13.03 7.37317 13.6858 7.49984 14.875 7.49984C16.0642 7.49984 16.72 7.37234 16.9408 7.099C17.1667 6.81817 17.1667 6.1515 17.1667 5.22817C17.1667 3.08984 17.1667 2.9165 14.875 2.9165M14.875 8.74984C13.47 8.74984 12.4158 8.60234 11.8367 7.88317C11.3333 7.259 11.3333 6.40734 11.3333 5.229L11.9583 5.20817H11.3333C11.3333 2.8165 11.4842 1.6665 14.875 1.6665C18.2658 1.6665 18.4167 2.8165 18.4167 5.20817C18.4167 6.4065 18.4167 7.259 17.9133 7.88317C17.3342 8.60234 16.28 8.74984 14.875 8.74984" fill="#3D4A5C"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.70833 12.083C3.41666 12.083 3.41666 12.2563 3.41666 14.3747V14.3955C3.41666 15.318 3.41666 15.9847 3.6425 16.2663C3.86333 16.5397 4.51916 16.6663 5.70833 16.6663C6.8975 16.6663 7.55333 16.5388 7.77416 16.2655C8 15.9847 8 15.318 8 14.3947C8 12.2563 8 12.083 5.70833 12.083M5.70833 17.9163C4.30333 17.9163 3.24916 17.7688 2.67 17.0497C2.16666 16.4255 2.16666 15.5738 2.16666 14.3955L2.79166 14.3747H2.16666C2.16666 11.983 2.3175 10.833 5.70833 10.833C9.09916 10.833 9.25 11.983 9.25 14.3747C9.25 15.573 9.25 16.4255 8.74666 17.0497C8.1675 17.7688 7.11333 17.9163 5.70833 17.9163" fill="#3D4A5C"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 12.083C12.5833 12.083 12.5833 12.2563 12.5833 14.3747V14.3955C12.5833 15.318 12.5833 15.9847 12.8092 16.2663C13.03 16.5397 13.6858 16.6663 14.875 16.6663C16.0642 16.6663 16.72 16.5388 16.9408 16.2655C17.1667 15.9847 17.1667 15.318 17.1667 14.3947C17.1667 12.2563 17.1667 12.083 14.875 12.083M14.875 17.9163C13.47 17.9163 12.4158 17.7688 11.8367 17.0497C11.3333 16.4255 11.3333 15.5738 11.3333 14.3955L11.9583 14.3747H11.3333C11.3333 11.983 11.4842 10.833 14.875 10.833C18.2658 10.833 18.4167 11.983 18.4167 14.3747C18.4167 15.573 18.4167 16.4255 17.9133 17.0497C17.3342 17.7688 16.28 17.9163 14.875 17.9163" fill="#3D4A5C"/>
+                        </svg>                        
+                      {{j.category}}</h6>
+                    <h6>
+                      <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.625 6.875H17.375M14.25 1.875V4.375M6.75 1.875V4.375M4.25 3.125H16.75C17.0952 3.125 17.375 3.40482 17.375 3.75V16.25C17.375 16.5952 17.0952 16.875 16.75 16.875H4.25C3.90482 16.875 3.625 16.5952 3.625 16.25V3.75C3.625 3.40482 3.90482 3.125 4.25 3.125Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>                                               
+                      {{j.date}}</h6>
+                    <h6>
+                      <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 10.625C11.8807 10.625 13 9.50571 13 8.125C13 6.74429 11.8807 5.625 10.5 5.625C9.11929 5.625 8 6.74429 8 8.125C8 9.50571 9.11929 10.625 10.5 10.625Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16.75 8.125C16.75 13.75 10.5 18.125 10.5 18.125C10.5 18.125 4.25 13.75 4.25 8.125C4.25 6.4674 4.90848 4.87768 6.08058 3.70558C7.25268 2.53348 8.8424 1.875 10.5 1.875C12.1576 1.875 13.7473 2.53348 14.9194 3.70558C16.0915 4.87768 16.75 6.4674 16.75 8.125Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>                        
+                      {{j.venue}}</h6>
+                    {% if j.is_public %}
+                    <h6>
+                      <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 4.37451C4.25 4.37451 1.75 10.0001 1.75 10.0001C1.75 10.0001 4.25 15.6245 10.5 15.6245C16.75 15.6245 19.25 10.0001 19.25 10.0001C19.25 10.0001 16.75 4.37451 10.5 4.37451Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.5 13.1252C12.2259 13.1252 13.625 11.7261 13.625 10.0002C13.625 8.27428 12.2259 6.87517 10.5 6.87517C8.77411 6.87517 7.375 8.27428 7.375 10.0002C7.375 11.7261 8.77411 13.1252 10.5 13.1252Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Public</h6>
+                    {% else %}
+                    <h6>
+                      <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.5 4.37451C4.25 4.37451 1.75 10.0001 1.75 10.0001C1.75 10.0001 4.25 15.6245 10.5 15.6245C16.75 15.6245 19.25 10.0001 19.25 10.0001C19.25 10.0001 16.75 4.37451 10.5 4.37451Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10.5 13.1252C12.2259 13.1252 13.625 11.7261 13.625 10.0002C13.625 8.27428 12.2259 6.87517 10.5 6.87517C8.77411 6.87517 7.375 8.27428 7.375 10.0002C7.375 11.7261 8.77411 13.1252 10.5 13.1252Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>                        
+                      Private</h6>
+                    {% endif %}
+                    <h6 style="color: #1B4DFF;">Created : {{j.date_created}}</h6>
+                    <h6 style="color: #1B4DFF;">Verified : {{j.date_verified}}</h6>
+                  </div>
+                </div>
+              </div>
+            </a>
+          <!-- card row -->
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="info-card" style="align-self: center; width: 1120px; height: 300px; margin-top: -60px; display: flex; justify-content: center; align-items: center;">
+        <h4 style="text-align: center; margin: 0;"><strong>You do not have any listings yet.</strong></h4>
+      </div>
+      {% endif %}
+
+      {% if processinglistings|length != 0 %}
+      <div style="width: 1120px; align-self: center; text-align: left;">
+        <h3 id="headline" style="align-self: center; margin-bottom: -35px;"><strong>Processing Listings</strong></h3>
+      </div>
+
+      <div class="card-row">
+        {% for j in processinglistings %}
+          <!-- card row -->
+          <div class="card-column" style="overflow: hidden;">
+            <div>
+              <img src={{j.image_url}} class="image" style="width: 288px; height: 144px;">
+              <div class="column mt-2" style="padding-top: 12px; padding-bottom: 20px;">
+                <h4 style="color: #3D4A5C;"><strong>{{j.title}}</strong></h4>
+                <h6 style="font-weight: bold;">
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.70833 2.9165C3.41666 2.9165 3.41666 3.08984 3.41666 5.20817V5.229C3.41666 6.1515 3.41666 6.81817 3.6425 7.09984C3.86333 7.37317 4.51916 7.49984 5.70833 7.49984C6.8975 7.49984 7.55333 7.37234 7.77416 7.099C8 6.81817 8 6.1515 8 5.22817C8 3.08984 8 2.9165 5.70833 2.9165M5.70833 8.74984C4.30333 8.74984 3.24916 8.60234 2.67 7.88317C2.16666 7.259 2.16666 6.40734 2.16666 5.229L2.79166 5.20817H2.16666C2.16666 2.8165 2.3175 1.6665 5.70833 1.6665C9.09916 1.6665 9.25 2.8165 9.25 5.20817C9.25 6.4065 9.25 7.259 8.74666 7.88317C8.1675 8.60234 7.11333 8.74984 5.70833 8.74984" fill="#3D4A5C"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 2.9165C12.5833 2.9165 12.5833 3.08984 12.5833 5.20817V5.229C12.5833 6.1515 12.5833 6.81817 12.8092 7.09984C13.03 7.37317 13.6858 7.49984 14.875 7.49984C16.0642 7.49984 16.72 7.37234 16.9408 7.099C17.1667 6.81817 17.1667 6.1515 17.1667 5.22817C17.1667 3.08984 17.1667 2.9165 14.875 2.9165M14.875 8.74984C13.47 8.74984 12.4158 8.60234 11.8367 7.88317C11.3333 7.259 11.3333 6.40734 11.3333 5.229L11.9583 5.20817H11.3333C11.3333 2.8165 11.4842 1.6665 14.875 1.6665C18.2658 1.6665 18.4167 2.8165 18.4167 5.20817C18.4167 6.4065 18.4167 7.259 17.9133 7.88317C17.3342 8.60234 16.28 8.74984 14.875 8.74984" fill="#3D4A5C"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.70833 12.083C3.41666 12.083 3.41666 12.2563 3.41666 14.3747V14.3955C3.41666 15.318 3.41666 15.9847 3.6425 16.2663C3.86333 16.5397 4.51916 16.6663 5.70833 16.6663C6.8975 16.6663 7.55333 16.5388 7.77416 16.2655C8 15.9847 8 15.318 8 14.3947C8 12.2563 8 12.083 5.70833 12.083M5.70833 17.9163C4.30333 17.9163 3.24916 17.7688 2.67 17.0497C2.16666 16.4255 2.16666 15.5738 2.16666 14.3955L2.79166 14.3747H2.16666C2.16666 11.983 2.3175 10.833 5.70833 10.833C9.09916 10.833 9.25 11.983 9.25 14.3747C9.25 15.573 9.25 16.4255 8.74666 17.0497C8.1675 17.7688 7.11333 17.9163 5.70833 17.9163" fill="#3D4A5C"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 12.083C12.5833 12.083 12.5833 12.2563 12.5833 14.3747V14.3955C12.5833 15.318 12.5833 15.9847 12.8092 16.2663C13.03 16.5397 13.6858 16.6663 14.875 16.6663C16.0642 16.6663 16.72 16.5388 16.9408 16.2655C17.1667 15.9847 17.1667 15.318 17.1667 14.3947C17.1667 12.2563 17.1667 12.083 14.875 12.083M14.875 17.9163C13.47 17.9163 12.4158 17.7688 11.8367 17.0497C11.3333 16.4255 11.3333 15.5738 11.3333 14.3955L11.9583 14.3747H11.3333C11.3333 11.983 11.4842 10.833 14.875 10.833C18.2658 10.833 18.4167 11.983 18.4167 14.3747C18.4167 15.573 18.4167 16.4255 17.9133 17.0497C17.3342 17.7688 16.28 17.9163 14.875 17.9163" fill="#3D4A5C"/>
+                    </svg> 
+                  {{j.category}}</h6>
+                <h6>
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.625 6.875H17.375M14.25 1.875V4.375M6.75 1.875V4.375M4.25 3.125H16.75C17.0952 3.125 17.375 3.40482 17.375 3.75V16.25C17.375 16.5952 17.0952 16.875 16.75 16.875H4.25C3.90482 16.875 3.625 16.5952 3.625 16.25V3.75C3.625 3.40482 3.90482 3.125 4.25 3.125Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>   
+                  {{j.date}}</h6>
+                <h6>
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.5 10.625C11.8807 10.625 13 9.50571 13 8.125C13 6.74429 11.8807 5.625 10.5 5.625C9.11929 5.625 8 6.74429 8 8.125C8 9.50571 9.11929 10.625 10.5 10.625Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16.75 8.125C16.75 13.75 10.5 18.125 10.5 18.125C10.5 18.125 4.25 13.75 4.25 8.125C4.25 6.4674 4.90848 4.87768 6.08058 3.70558C7.25268 2.53348 8.8424 1.875 10.5 1.875C12.1576 1.875 13.7473 2.53348 14.9194 3.70558C16.0915 4.87768 16.75 6.4674 16.75 8.125Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg> 
+                  {{j.venue}}</h6>
+                {% if j.is_public %}
+                <h6>
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.5 4.37451C4.25 4.37451 1.75 10.0001 1.75 10.0001C1.75 10.0001 4.25 15.6245 10.5 15.6245C16.75 15.6245 19.25 10.0001 19.25 10.0001C19.25 10.0001 16.75 4.37451 10.5 4.37451Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10.5 13.1252C12.2259 13.1252 13.625 11.7261 13.625 10.0002C13.625 8.27428 12.2259 6.87517 10.5 6.87517C8.77411 6.87517 7.375 8.27428 7.375 10.0002C7.375 11.7261 8.77411 13.1252 10.5 13.1252Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  Public</h6>
+                {% else %}
+                <h6>
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.5 4.37451C4.25 4.37451 1.75 10.0001 1.75 10.0001C1.75 10.0001 4.25 15.6245 10.5 15.6245C16.75 15.6245 19.25 10.0001 19.25 10.0001C19.25 10.0001 16.75 4.37451 10.5 4.37451Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10.5 13.1252C12.2259 13.1252 13.625 11.7261 13.625 10.0002C13.625 8.27428 12.2259 6.87517 10.5 6.87517C8.77411 6.87517 7.375 8.27428 7.375 10.0002C7.375 11.7261 8.77411 13.1252 10.5 13.1252Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  Private</h6>
+                {% endif %}
+                <h6 style="color: #1B4DFF;">Created : {{j.date_created}}</h6>
+              </div>
+            </div>
+          </div>
+          <!-- card row -->
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if rejectedlistings|length != 0 %}
+      <div style="width: 1120px; align-self: center; text-align: left;">
+        <h3 id="headline" style="align-self: center; margin-bottom: -35px;"><strong>Rejected Listings</strong></h3>
+      </div>
+
+      <div class="card-row">
+        {% for j in rejectedlistings %}
+          <!-- card row -->
+          <div class="card-column" style="overflow: hidden;">
+            <div>
+              <img src={{j.image_url}} class="image" style="width: 288px; height: 144px;">
+              <div class="column mt-2" style="padding-top: 12px; padding-bottom: 20px;">
+                <h4 style="color: #3D4A5C;"><strong>{{j.title}}</strong></h4>
+                <h6 style="font-weight: bold;">
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.70833 2.9165C3.41666 2.9165 3.41666 3.08984 3.41666 5.20817V5.229C3.41666 6.1515 3.41666 6.81817 3.6425 7.09984C3.86333 7.37317 4.51916 7.49984 5.70833 7.49984C6.8975 7.49984 7.55333 7.37234 7.77416 7.099C8 6.81817 8 6.1515 8 5.22817C8 3.08984 8 2.9165 5.70833 2.9165M5.70833 8.74984C4.30333 8.74984 3.24916 8.60234 2.67 7.88317C2.16666 7.259 2.16666 6.40734 2.16666 5.229L2.79166 5.20817H2.16666C2.16666 2.8165 2.3175 1.6665 5.70833 1.6665C9.09916 1.6665 9.25 2.8165 9.25 5.20817C9.25 6.4065 9.25 7.259 8.74666 7.88317C8.1675 8.60234 7.11333 8.74984 5.70833 8.74984" fill="#3D4A5C"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 2.9165C12.5833 2.9165 12.5833 3.08984 12.5833 5.20817V5.229C12.5833 6.1515 12.5833 6.81817 12.8092 7.09984C13.03 7.37317 13.6858 7.49984 14.875 7.49984C16.0642 7.49984 16.72 7.37234 16.9408 7.099C17.1667 6.81817 17.1667 6.1515 17.1667 5.22817C17.1667 3.08984 17.1667 2.9165 14.875 2.9165M14.875 8.74984C13.47 8.74984 12.4158 8.60234 11.8367 7.88317C11.3333 7.259 11.3333 6.40734 11.3333 5.229L11.9583 5.20817H11.3333C11.3333 2.8165 11.4842 1.6665 14.875 1.6665C18.2658 1.6665 18.4167 2.8165 18.4167 5.20817C18.4167 6.4065 18.4167 7.259 17.9133 7.88317C17.3342 8.60234 16.28 8.74984 14.875 8.74984" fill="#3D4A5C"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.70833 12.083C3.41666 12.083 3.41666 12.2563 3.41666 14.3747V14.3955C3.41666 15.318 3.41666 15.9847 3.6425 16.2663C3.86333 16.5397 4.51916 16.6663 5.70833 16.6663C6.8975 16.6663 7.55333 16.5388 7.77416 16.2655C8 15.9847 8 15.318 8 14.3947C8 12.2563 8 12.083 5.70833 12.083M5.70833 17.9163C4.30333 17.9163 3.24916 17.7688 2.67 17.0497C2.16666 16.4255 2.16666 15.5738 2.16666 14.3955L2.79166 14.3747H2.16666C2.16666 11.983 2.3175 10.833 5.70833 10.833C9.09916 10.833 9.25 11.983 9.25 14.3747C9.25 15.573 9.25 16.4255 8.74666 17.0497C8.1675 17.7688 7.11333 17.9163 5.70833 17.9163" fill="#3D4A5C"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.875 12.083C12.5833 12.083 12.5833 12.2563 12.5833 14.3747V14.3955C12.5833 15.318 12.5833 15.9847 12.8092 16.2663C13.03 16.5397 13.6858 16.6663 14.875 16.6663C16.0642 16.6663 16.72 16.5388 16.9408 16.2655C17.1667 15.9847 17.1667 15.318 17.1667 14.3947C17.1667 12.2563 17.1667 12.083 14.875 12.083M14.875 17.9163C13.47 17.9163 12.4158 17.7688 11.8367 17.0497C11.3333 16.4255 11.3333 15.5738 11.3333 14.3955L11.9583 14.3747H11.3333C11.3333 11.983 11.4842 10.833 14.875 10.833C18.2658 10.833 18.4167 11.983 18.4167 14.3747C18.4167 15.573 18.4167 16.4255 17.9133 17.0497C17.3342 17.7688 16.28 17.9163 14.875 17.9163" fill="#3D4A5C"/>
+                    </svg> 
+                  {{j.category}}</h6>
+                <h6>
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.625 6.875H17.375M14.25 1.875V4.375M6.75 1.875V4.375M4.25 3.125H16.75C17.0952 3.125 17.375 3.40482 17.375 3.75V16.25C17.375 16.5952 17.0952 16.875 16.75 16.875H4.25C3.90482 16.875 3.625 16.5952 3.625 16.25V3.75C3.625 3.40482 3.90482 3.125 4.25 3.125Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>   
+                  {{j.date}}</h6>
+                <h6>
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.5 10.625C11.8807 10.625 13 9.50571 13 8.125C13 6.74429 11.8807 5.625 10.5 5.625C9.11929 5.625 8 6.74429 8 8.125C8 9.50571 9.11929 10.625 10.5 10.625Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16.75 8.125C16.75 13.75 10.5 18.125 10.5 18.125C10.5 18.125 4.25 13.75 4.25 8.125C4.25 6.4674 4.90848 4.87768 6.08058 3.70558C7.25268 2.53348 8.8424 1.875 10.5 1.875C12.1576 1.875 13.7473 2.53348 14.9194 3.70558C16.0915 4.87768 16.75 6.4674 16.75 8.125Z" stroke="#3D4A5C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg> 
+                  {{j.venue}}</h6>
+                {% if j.is_public %}
+                <h6>
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.5 4.37451C4.25 4.37451 1.75 10.0001 1.75 10.0001C1.75 10.0001 4.25 15.6245 10.5 15.6245C16.75 15.6245 19.25 10.0001 19.25 10.0001C19.25 10.0001 16.75 4.37451 10.5 4.37451Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10.5 13.1252C12.2259 13.1252 13.625 11.7261 13.625 10.0002C13.625 8.27428 12.2259 6.87517 10.5 6.87517C8.77411 6.87517 7.375 8.27428 7.375 10.0002C7.375 11.7261 8.77411 13.1252 10.5 13.1252Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  Public</h6>
+                {% else %}
+                <h6>
+                  <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.5 4.37451C4.25 4.37451 1.75 10.0001 1.75 10.0001C1.75 10.0001 4.25 15.6245 10.5 15.6245C16.75 15.6245 19.25 10.0001 19.25 10.0001C19.25 10.0001 16.75 4.37451 10.5 4.37451Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10.5 13.1252C12.2259 13.1252 13.625 11.7261 13.625 10.0002C13.625 8.27428 12.2259 6.87517 10.5 6.87517C8.77411 6.87517 7.375 8.27428 7.375 10.0002C7.375 11.7261 8.77411 13.1252 10.5 13.1252Z" stroke="#3D4A5C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  Private</h6>
+                {% endif %}
+                <h6 style="color: #1B4DFF;">Created : {{j.date_created}}</h6>
+                <div style="background-color: #ffffff; padding: 10px; border-radius: 10px;">
+                  <h6 style="color: #ff0000; text-align: justify; font-weight: bold;">Reason for Rejection:</h6>
+                  <h6 style="color: #ff0000; text-align: justify;">{{j.notes}}</h6>
+                </div>
+              </div>
+            </div>
+            <button style="background-color: #ff0000; font-size: small; margin-top: -15px;" onclick="location.href='/upload/listing-documents/{{ j.id }}/reupload'">Resubmit Documents</button>
+          </div>
+          <!-- card row -->
+        {% endfor %}
+      </div>
+      {% endif %}
+
+  </div> <!-- container all -->
+
+  </body>
+</html>
+
+{% endblock %}

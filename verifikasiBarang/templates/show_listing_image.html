@@ -1,0 +1,62 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Events</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <style>
+        button {
+          display: inline-block;
+          background-color: #1B4DFF;
+          color: white;
+          padding: 8px 18px;
+          border-radius: 8px;
+          border: none;
+          width: 130px;
+          margin: 5px;
+        }
+        button:hover {
+          background-color: #4D90FE; /* Change the background color when hovering */
+          cursor: pointer; /* Change the cursor to a pointer when hovering */
+        }
+        .container {
+          height: 600px; /* Set a height for the container */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .content {
+          background-color: white;
+          border-radius: 30px;
+          box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+          padding: 50px;
+          text-align: center; /* Optional: center the content horizontally */
+          border: 1px solid #1B4DFF;
+          margin: 50px;
+          height: auto;
+        }
+    </style>
+
+  <h2 style="text-align: center; margin-top: 20px;">View PDF</h2>
+    <div class="content">
+      <br>
+      <object data="{{ pdf_url }}" type="application/pdf" width="100%" height="1080">
+        <p>Your web browser doesn't have a PDF plugin.
+        Instead you can <a href="{{ pdf_url }}">click here to
+        download the PDF file.</a></p>
+      </object>
+    </div>
+
+
+  </body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Events</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 0 auto; /* centers the table horizontally */
+            max-width: 1500px; /* sets a maximum width for the table */
+        }
+    
+        th, td {
+          text-align: left;
+          padding: 8px;
+          border-top: 1px solid lightgray; /* Add border to the top of the cell */
+          border-bottom: 1px solid lightgray; /* Add border to the bottom of the cell */
+        }
+    
+        th {
+            background-color: #1B4DFF; /* Add a background color to header cells */
+        }
+        
+        .table-header {
+            background-color: #1B4DFF;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table-header th {
+            border: none;
+        }
+
+        .table-header th:first-child {
+            border-top-left-radius: 5px;
+        }
+
+        .table-header th:last-child {
+            border-top-right-radius: 5px;
+        }
+
+        td:first-child {
+            font-weight: bold;
+        }
+
+        td a {
+            color: #1B4DFF;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }        
+        .container {
+            margin: auto;
+            width: 50%;
+        }
+        .form-container {
+          margin: auto;
+          width: 80%; /* Set the width of the form container to 80% */
+          max-width: 800px; /* Add a maximum width to the form container */
+          background-color: #ffffff;
+          box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+          border: 1px solid #1B4DFF;
+          border-radius: 20px;
+          padding: 20px;
+          text-align: center; /* Center the contents of the form container */
+        }
+        form {
+          display: flex; /* Use flexbox to position the form elements */
+          flex-direction: column; /* Set the direction of the flexbox to column */
+          align-items: center; /* Center the form elements horizontally */
+        }
+        label {
+          display: block; /* Make the label a block element */
+          margin-bottom: 10px; /* Add some bottom margin to the label */
+          text-align: center; /* Center the label horizontally */
+          font-weight: bold;
+        }
+        input,
+        textarea {
+          width: 100%; /* Make the input fields and textareas 100% width */
+          padding: 8px;
+          border: 1px solid black;
+          border-radius: 5px;
+          box-sizing: border-box;
+          resize: none;
+        }
+        button {
+          display: inline-block;
+          background-color: #1B4DFF;
+          color: white;
+          padding: 8px 18px;
+          border-radius: 8px;
+          border: none;
+          width: 100px;
+          margin: 10px;
+        }
+        button:hover {
+          background-color: #4D90FE; /* Change the background color when hovering */
+          cursor: pointer; /* Change the cursor to a pointer when hovering */
+        }
+    </style>
+
+    <div class="container" text-align:center>
+        <h2 style="margin-bottom: 17px; font-weight: bold;">Create a New Event</h2>
+    </div>
+    <div class="form-container">
+        <form action = "" method = "POST">
+        {% csrf_token %}
+            <label for="title">Title</label>
+            <textarea name="title" id="title" placeholder="Enter the Event Title" required></textarea><br>
+    
+            <label for="category">Category</label>
+            <textarea name="category" id="category" placeholder="Enter the Ticket Category (ex. CAT 1)" required></textarea><br>
+    
+            <label for="date">Date</label>
+            <input type="date" name="date" id="date" placeholder="Enter the Event Date" required><br>
+    
+            <label for="venue">Venue</label>
+            <textarea name="venue" id="venue" placeholder="Enter the Event Venue" required></textarea><br>
+    
+            <label for="image_url">Image URL</label>
+            <textarea name="image_url" id="image_url" placeholder="Enter the Image URL for the Event Thumbnail" required></textarea><br>
+    
+            <div>
+                <button type='submit'>Submit</button>      
+            </div>
+        </form>
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+    <div class="container">
+        <h2 style="margin-bottom: 17px; font-weight: bold; text-align: center;">List of Created Events</h2>
+    </div>
+    <table>
+        <caption>This is the list of events created by the Admin</caption>
+        <thead class="table-header">
+            <tr>
+                <th scope="col">Event ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Category</th>
+                <th scope="col">Date</th>
+                <th scope="col">Venue</th>
+                <th scope="col">Image URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in result %}
+            <tr>
+                <td>{{ res.id }}</td>
+                <td>{{ res.title }}</td>
+                <td>{{ res.category }}</td>
+                <td>{{ res.date }}</td>
+                <td>{{ res.venue }}</td>
+                <td><a href="{{res.image_url}}" target="_blank">View Image</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+  </body>
+</html>
+
+{% endblock %}

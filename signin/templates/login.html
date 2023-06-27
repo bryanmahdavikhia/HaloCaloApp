@@ -1,0 +1,147 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .container-form{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 20px 24px -4px rgba(45, 54, 67, 0.04), 0px 8px 11px -4px rgba(45, 54, 67, 0.04);
+    border-radius: 16px;
+    width: 376px;
+    padding: 28px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #94ABFF;
+  }
+  .background{
+    position: relative;
+  }
+  .background-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .password-container {
+  position: relative;
+}
+
+.password-container i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
+}
+
+</style>
+<div class="background">
+  <div class="background-overlay">
+    <svg width="559" height="870" viewBox="0 0 559 870" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30.5821 -261.004C235.03 -234.44 478.043 238.817 546 530C648.029 1374.69 92.3303 863.828 -112.117 837.264C-486.018 721.623 -138.945 495.476 -112.117 289C-85.2897 82.5242 -173.865 -287.569 30.5821 -261.004Z" fill="url(#paint0_radial_64_9884)"/>
+      <defs>
+      <radialGradient id="paint0_radial_64_9884" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(166.043 336.061) rotate(46.5322) scale(449.099 735.388)">
+      <stop stop-color="#B4C4FF"/>
+      <stop offset="1" stop-color="#B4C4FF" stop-opacity="0"/>
+      </radialGradient>
+      </defs>
+      </svg>      
+  </div>
+  <div class="container" style="padding-top: 100px;padding-left: 60px;">
+    <div class="row gx-10 mt-2" style="gap: 133px">
+      <!-- Content Form -->
+      <div class="col">
+        <img src="https://i.ibb.co/DwRngN7/icon-removebg-preview-1.png" alt="My image" height="400px" width="400px">
+        <div class="mr-3 mt-4" style="padding-top: 30px"> 
+          <h3 class="h3" style="color:#042BB2"><strong>Log in to get the full benefits!</strong></h3>
+          <p class="h6" style="line-height: 1.5rem;">It’s quick and easy! You just need to input your email/username and password.</p>
+        </div>
+      </div>
+      
+      <!-- Login Form -->
+      <div class="col ml-5 " width="300px">
+          <div class="container-form " style="border-radius: 2rem; width: 400px;">
+            
+            <!--spinner div-->
+            <div id="spinner-box" style="text-align: center;" class="mb-5 mt-5">
+              <div class="spinner-border text-info mb-3" role="status" style="width: 4rem; height: 4rem;">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <h3 class="h3" style="color:#042BB2"><strong>Logging In!</strong></h3>
+              <p class="h6" style="line-height: 1.5rem;">Please wait a minute...</p>
+            </div>
+            
+            <div class="align-items-center" width="100px" id="form">
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-danger mt-2" role="alert" style="height: 45px; font-size: 14px;">
+                {{ message }}
+              </div>
+              {% endfor %}
+              {% endif %}
+              <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <!-- Username input -->
+                <div class="form-group mb-5">
+                  <label class="form-label" for="form3Example3">Email or username</label>
+                  <input type="username" name="username" required id="form3Example3" class="form-control"
+                    placeholder="Enter your email or username" />
+                </div>
+
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+                
+                <!-- Password input -->
+                <div class="form-group mt-3 mb-2">
+                  <label class="form-label" for="form3Example4">Password</label>
+                  <div class="password-container">
+                  <input type="password" name="password" required id="form3Example4" class="form-control"
+                    placeholder="Enter your password" />
+                  </div>
+                </div>
+                <p style="font-size: 13px;"><em class="far fa-eye" id="togglePassword" style="cursor: pointer;"></em>  Show Password</p>
+
+                <div class="text-center text-lg-start mt-5 mb-5">
+                  <button type="submit" class="btn btn-primary mt-1 mb-3" style="background-color:#214be4" id="button"><span style="font-size:smaller;">Sign In</span></button>
+                  <p class="small font-weight-bold mt-2 pt-1 mb-1">Not registered?</p> 
+                  <a type="button" href="/signup/">Sign Up</a>
+
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+  
+  </div>
+</div>   
+
+<script>
+  const title = document.getElementById('title')
+  const navsignin = document.getElementById('nav-signin')
+  const spinnerbox = document.getElementById('spinner-box')
+  const contentSignin = document.getElementById('form')
+  const button = document.getElementById('button')
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#form3Example4');
+
+  title.innerHTML = "Sign In | HaloCalo"
+  navsignin.style.color = "#3044ff";
+  spinnerbox.style.display='none';
+
+  button.addEventListener('click', function() {
+      console.log(contentSignin)
+      contentSignin.style.display = 'none';
+      spinnerbox.style.display = 'block';
+  });
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+
+</script>
+{% endblock %}

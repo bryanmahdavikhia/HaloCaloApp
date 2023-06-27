@@ -1,0 +1,47 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Events</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <style>
+        button {
+          display: inline-block;
+          background-color: #1B4DFF;
+          color: white;
+          padding: 8px 18px;
+          border-radius: 8px;
+          border: none;
+          width: 130px;
+          margin: 35px;
+        }
+        button:hover {
+          background-color: #4D90FE; /* Change the background color when hovering */
+          cursor: pointer; /* Change the cursor to a pointer when hovering */
+        }
+        img {
+          border-radius: 10px;
+          border: 2px solid #1B4DFF;
+          box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <div class="container" style="text-align: center;">
+        <h2 style="margin-bottom: 17px; font-weight: bold; margin-top: 50px;">{{username}} - {{file}}</h2>
+        <img src="{{ image_data }}" alt="KTP Image">
+        <button onclick="location.href='/admin/seller-verification'">Back</button>
+    </div>
+
+
+  </body>
+</html>
+
+{% endblock %}

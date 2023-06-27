@@ -1,0 +1,400 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-size: 14px;
+        }
+
+        .separator {
+            width: 100px;
+        }
+
+        .first-div {
+            margin: 0 auto;
+            width: 984px;
+        }
+
+        .image {
+            width: 409.37px;
+            height: 338.5px;
+            object-fit: cover;
+        }
+
+        img {
+            border-radius: 10px;
+        }
+
+        .card-grid {
+            display: grid;
+            width: 984px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 0 auto;
+        }
+
+        .small-card {
+            width: 323px;
+            height: 73px;
+            background-color: rgba(242, 245, 255, 1);
+            margin: 5px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .small-card:hover {
+            transform: scale(1.05);
+            transition: transform 0.4s ease-in-out;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .small-card-image {
+            width: 72px;
+            height: 73px;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            overflow: hidden;
+        }
+
+        .small-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .small-card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 8px;
+        }
+
+        .small-card-title {
+            font-family: Poppins;
+            font-weight: bold;
+            font-size: 14px;
+            color: rgba(45, 54, 67, 1);
+            margin: 0;
+            padding: 0;
+        }
+
+        .small-card-listings {
+            font-family: Poppins;
+            font-weight: medium;
+            font-size: 14px;
+            color: rgba(135, 151, 174, 1);
+            margin: 0;
+            padding: 0;
+        }
+
+        .event-categories {
+            width: 503px;
+            height: 50px;
+
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 36px;
+            line-height: 50px;
+
+            letter-spacing: -1px;
+
+            color: #2D3643;
+            margin-top: 40px;
+            margin-bottom: 40px;
+
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+        }
+
+        .pagination a,
+        .pagination span {
+            display: inline-block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+        }
+
+        .current-page {
+            display: inline-block;
+            padding: 10px;
+        }
+
+        .prev-link,
+        .next-link,
+        .first-link,
+        .last-link {
+            font-size: 26px;
+        }
+
+        .image-frame {
+            width: 1040px;
+            height: 470px;
+            left: 120px;
+            top: 150px;
+            margin-top: 50px;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn {
+            box-sizing: border-box;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 15px;
+            gap: 10px;
+
+            position: absolute;
+            width: 122px;
+            height: 40px;
+
+            background: #FFFFFF;
+
+            border: 1px solid #4A72FF;
+            border-radius: 6px;
+        }
+
+        .discover-text {
+            position: absolute;
+            width: 687px;
+            height: 100px;
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 36px;
+            line-height: 50px;
+            text-align: center;
+            letter-spacing: -1px;
+            color: #2D3643;
+        }
+
+        .card-content {
+            align-items: center;
+            padding: 20px;
+            gap: 12px;
+            background: #F2F5FF;
+            box-shadow: 0px 4px 8px -2px rgba(45, 54, 67, 0.08), 0px 2px 4px -2px rgba(45, 54, 67, 0.06);
+            border-radius: 16px;
+            /* height: 338px; */
+            width: 328px;
+            height: fit-content;
+        }
+
+        .card-content:hover {
+            transform: scale(1.05);
+            transition: transform 0.4s ease-in-out;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Gap between cards (horizontal) */
+        .card-row {
+            margin-left: 325px;
+            gap: 40px;
+            position: relative;
+        }
+
+        .overlay-container {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="first-div">
+        <div style="position: relative;">
+            <div class="discover-text" style="top: 35%; left: 18%;">Discover the Hottest Concerts and Events of the
+                Season</div>
+            <button class="btn" onclick="scrollToFeaturedCategories()" style="top: 60%; left: 47%;">See
+                more</button>
+            <div class="image-frame">
+                <img src="https://i.ibb.co/ygkBWhL/Frame-632651.png" alt="Frame image">
+            </div>
+        </div>
+
+        <div class="event-categories">Events</div>
+        <div class="card-grid">
+            {% for event in events %}
+            <a href="/events/{{ event.title }}/listings" style="text-decoration: none;">
+                <div class="small-card">
+                    <div class="small-card-image">
+                        <img src="{{ event.image_url }}">
+                    </div>
+                    <div class="small-card-content">
+                        <h2 class="small-card-title">{{ event.title }}</h2>
+                        <p class="small-card-listings">{{ event.num_listings }} Listings</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="pagination">
+            <div class="first-link">
+                {% if events.has_previous %}
+                <a href="?page=1">&laquo;</a>
+                {% else %}
+                <span style="color: gray;">&laquo;</span>
+                {% endif %}
+            </div>
+
+            <div class="prev-link">
+                {% if events.has_previous %}
+                <a href="?page={{ events.previous_page_number }}">&lsaquo;</a>
+                {% else %}
+                <span style="color: gray;">&lsaquo;</span>
+                {% endif %}
+            </div>
+
+            <div class="current-page" style="margin-top: 12px; font-weight: bold; font-size: 12px;">
+                {{ events.number }} of {{ events.paginator.num_pages }}
+            </div>
+
+            <div class="next-link">
+                {% if events.has_next %}
+                <a href="?page={{ events.next_page_number }}">&rsaquo;</a>
+                {% else %}
+                <span style="color: gray;">&rsaquo;</span>
+                {% endif %}
+            </div>
+
+            <div class="last-link">
+                {% if events.has_next %}
+                <a href="?page={{ events.paginator.num_pages }}">&raquo;</a>
+                {% else %}
+                <span style="color: gray;">&raquo;</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Featured categories -->
+        <div id="featured-categories" style="margin-top: 120px;">
+            <p class="h2" style="font-weight: bolder;">Featured categories</p>
+            <p>Check out the most popular event categories!</p>
+        </div>
+        <div class="row mb-5" style="margin-top: 20px;">
+            <img src="{{ featured_event_1.banner_url_2 }}" alt="My image" style="position: absolute;" width="570.51px"
+                height="390px">
+            <div class="row card-row mt-4">
+                <!-- card row -->
+                {% for listing in featured_event_1.listing %}
+                <a href="/listing/{{listing.id}}" style="text-decoration: none; color: black;">
+                    <div class="card-content">
+                        <img src="{{ featured_event_1.image_url }}" class="image" style="width: 288px; height: 144px;">
+                        <div class="column mt-2" style="padding-top: 12px;">
+                            <h4 style="color: #3D4A5C;"><strong>{{featured_event_1.title}}</strong></h4>
+                            <h6>
+                                <img src="{% static 'home/icon/category.svg' %}">
+                                {{featured_event_1.category}}
+                            </h6>
+                            <h6>
+                                <img src="{% static 'home/icon/venue.svg' %}">
+                                {{featured_event_1.venue}}
+                            </h6>
+                            <h6>
+                                <img src="{% static 'home/icon/date.svg' %}">
+                                {{featured_event_1.date}}
+                            </h6>
+                            <h6 style="color:green; font-weight: bold;">
+                                <img src="{% static 'home/icon/verified.svg' %}">
+                                Verified
+                            </h6>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+                <!-- card row -->
+            </div>
+        </div>
+        <a href="/events/{{featured_event_1.title}}/listings" class="btn btn-primary mt-1 mb-3"
+            style="background-color:#214be4;">
+            <span style="font-size:smaller;">See More</span>
+        </a>
+
+
+        <div class="row mb-5" style="margin-top: 125px;">
+            <img src="{{ featured_event_2.banner_url_2 }}" alt="My image" style="position: absolute;" width="570.51px"
+                height="390px">
+            <div class="row card-row mt-4">
+                <!-- card row -->
+                {% for listing in featured_event_2.listing %}
+                <a href="/listing/{{listing.id}}" style="text-decoration: none; color: black;">
+                    <div class="card-content" href="/listing/{{listing.id}}">
+                        <img src="{{ featured_event_2.image_url }}" class="image" style="width: 288px; height: 144px;">
+                        <div class="column mt-2" style="padding-top: 12px;">
+                            <h4 style="color: #3D4A5C;"><strong>{{featured_event_2.title}}</strong></h4>
+                            <h6>
+                                <img src="{% static 'home/icon/category.svg' %}">
+                                {{featured_event_2.category}}
+                            </h6>
+                            <h6>
+                                <img src="{% static 'home/icon/venue.svg' %}">
+                                {{featured_event_2.venue}}
+                            </h6>
+                            <h6>
+                                <img src="{% static 'home/icon/date.svg' %}">
+                                {{featured_event_2.date}}
+                            </h6>
+                            <h6 style="color:green; font-weight: bold;">
+                                <img src="{% static 'home/icon/verified.svg' %}">
+                                Verified
+                            </h6>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+                <!-- card row -->
+            </div>
+        </div>
+        <a href="/events/{{featured_event_2.title}}/listings" class="btn btn-primary mt-1 mb-3"
+            style="background-color:#214be4;">
+            <span style="font-size:smaller;">See More</span>
+        </a>
+        <br>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const navsignin = document.getElementById('nav-event')
+    navsignin.style.color = "#3044ff";
+
+    function scrollToFeaturedCategories() {
+        const featuredCategoriesDiv = document.getElementById("featured-categories");
+        featuredCategoriesDiv.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+</script>
+
+</html>
+{% endblock %}

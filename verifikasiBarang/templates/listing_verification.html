@@ -1,0 +1,165 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Listing Verification</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 0 auto; /* centers the table horizontally */
+            max-width: 1700px; /* sets a maximum width for the table */
+        }
+    
+        th, td {
+          text-align: left;
+          padding: 8px;
+          border-top: 1px solid lightgray; /* Add border to the top of the cell */
+          border-bottom: 1px solid lightgray; /* Add border to the bottom of the cell */
+        }
+    
+        th {
+            background-color: #1B4DFF; /* Add a background color to header cells */
+        }
+        
+        .table-header {
+            background-color: #1B4DFF;
+            color: white;
+            font-weight: bold;
+        }
+
+        .table-header th {
+            border: none;
+        }
+
+        .table-header th:first-child {
+            border-top-left-radius: 5px;
+        }
+
+        .table-header th:last-child {
+            border-top-right-radius: 5px;
+        }
+
+        td:first-child {
+            font-weight: bold;
+        }
+
+        td a {
+            color: #1B4DFF;
+            text-decoration: none;
+        }
+
+        td a:hover {
+            text-decoration: underline;
+        }        
+        .container {
+            margin: auto;
+            width: 50%;
+        }
+        .form-container {
+          margin: auto;
+          width: 80%; /* Set the width of the form container to 80% */
+          max-width: 800px; /* Add a maximum width to the form container */
+          background-color: #ffffff;
+          box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+          border: 1px solid #1B4DFF;
+          border-radius: 20px;
+          padding: 20px;
+          text-align: center; /* Center the contents of the form container */
+        }
+        form {
+          display: flex; /* Use flexbox to position the form elements */
+          flex-direction: column; /* Set the direction of the flexbox to column */
+          align-items: center; /* Center the form elements horizontally */
+        }
+        label {
+          display: block; /* Make the label a block element */
+          margin-bottom: 10px; /* Add some bottom margin to the label */
+          text-align: center; /* Center the label horizontally */
+          font-weight: bold;
+        }
+        input,
+        textarea {
+          width: 100%; /* Make the input fields and textareas 100% width */
+          padding: 8px;
+          border: 1px solid black;
+          border-radius: 5px;
+          box-sizing: border-box;
+          resize: none;
+        }
+        button {
+          display: inline-block;
+          background-color: #1B4DFF;
+          color: white;
+          padding: 8px 18px;
+          border-radius: 8px;
+          border: none;
+          width: 100px;
+          margin: 10px;
+        }
+        button:hover {
+          background-color: #4D90FE; /* Change the background color when hovering */
+          cursor: pointer; /* Change the cursor to a pointer when hovering */
+        }
+    </style>
+
+    <div class="container">
+        <h2 style="margin-bottom: 17px; font-weight: bold; margin-top: 100px; text-align: center;">Listing Verification Documents</h2>
+    </div>
+    <table>
+        <thead class="table-header">
+            <tr>
+                <th>Listing ID</th>
+                <th>Seller Username</th>
+                <th>Public</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Path to PDF</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in result %}
+            <tr>
+                <td>{{ res.id }}</td>
+                <td>{{ res.seller_username }}</td>
+                <td>{{ res.is_public }}</td>
+                <td>{{ res.title }}</td>
+                <td>{{ res.category }}</td>
+                <td>{{ res.date }}</td>
+                <td>{{ res.venue }}</td>
+                <td>
+                    <a href="/admin/view-listing-docs-pdf/{{res.seller_username}}/{{res.id}}">View PDF</a>
+                </td>
+                <td>
+                {% if res.verification_status_id|stringformat:'s' == '425652d0-637b-4602-8369-ee33be10e198' %}
+                <a href="/admin/reject-listing/{{res.id}}" style="color:rgb(255, 0, 0);">Revoke</a>
+                {% endif %}
+                {% if res.verification_status_id|stringformat:'s' == 'fe2caca5-be86-45b1-997e-5a7a2bcf2a6e' %}
+                <a href="/admin/verify-listing/{{res.id}}" style="color:rgb(0, 255, 42);">Verify</a>
+                <a href="/admin/reject-listing/{{res.id}}" style="color:rgb(255, 0, 0);">Reject</a>
+                {% endif %}
+                {% if res.verification_status_id|stringformat:'s' == 'e5573012-185a-4b6c-bc43-715d5a1edcdf' %}
+                <p style="color: red;">Rejected</p>
+                {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+  </body>
+</html>
+
+{% endblock %}

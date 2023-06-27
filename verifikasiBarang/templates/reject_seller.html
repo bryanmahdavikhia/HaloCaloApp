@@ -1,0 +1,84 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reject Seller</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <style>
+      .container {
+        margin: auto;
+        width: 50%;
+      }
+      .form-container {
+        margin: auto;
+        width: 80%; /* Set the width of the form container to 80% */
+        max-width: 800px; /* Add a maximum width to the form container */
+        background-color: #ffffff;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+        border: 1px solid #1B4DFF;
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center; /* Center the contents of the form container */
+      }
+      form {
+        display: flex; /* Use flexbox to position the form elements */
+        flex-direction: column; /* Set the direction of the flexbox to column */
+        align-items: center; /* Center the form elements horizontally */
+      }
+      label {
+        display: block; /* Make the label a block element */
+        margin-bottom: 10px; /* Add some bottom margin to the label */
+        text-align: center; /* Center the label horizontally */
+        font-weight: bold;
+      }
+      input,
+      textarea {
+        width: 100%; /* Make the input fields and textareas 100% width */
+        padding: 8px;
+        border: 1px solid black;
+        border-radius: 5px;
+        box-sizing: border-box;
+        resize: vertical;
+        height: 150px;
+      }
+      button {
+        display: inline-block;
+        background-color: #1B4DFF;
+        color: white;
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: none;
+        width: 100px;
+        margin: 10px;
+      }
+      button:hover {
+        background-color: #4D90FE; /* Change the background color when hovering */
+        cursor: pointer; /* Change the cursor to a pointer when hovering */
+      }
+    </style>
+    <div class="container">
+      <h4 style="margin-bottom: 17px; font-weight: bold; margin-top: 100px; text-align: center;">Reject Seller: {{username}}</h4>
+    </div>
+    <div class="form-container">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <label for="notes">Notes</label>
+        <textarea placeholder="Why are you rejecting this document?" name="notes" id="notes" required></textarea>
+        <div>
+          <button type='submit'>Submit</button>      
+        </div>
+      </form>
+    </div>
+    
+  </body>
+</html>
+
+{% endblock %}

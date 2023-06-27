@@ -1,0 +1,437 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .container-form {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 20px 24px -4px rgba(45, 54, 67, 0.04), 0px 8px 11px -4px rgba(45, 54, 67, 0.04);
+    border-radius: 16px;
+    width: 376px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #94ABFF;
+  }
+
+  .background {
+    position: relative;
+  }
+
+  .image {
+    width: 409.37px;
+    height: 338.5px;
+    object-fit: cover;
+  }
+
+  .image-div {
+    padding-left: 210px;
+  }
+
+  .background-rectangle {
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px 20px 96px;
+    gap: 40px;
+
+    width: 2000px;
+    height: 409px;
+
+    background: #E8EDFF;
+
+    border: 1px solid #94ABFF;
+
+    box-shadow: 0px 20px 24px -4px rgba(45, 54, 67, 0.04), 0px 8px 11px -4px rgba(45, 54, 67, 0.04);
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+  }
+
+  .my-button {
+    display: inline-block;
+    background-color: #1B4DFF;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 5px;
+    border: none;
+    width: 300px;
+  }
+
+  .my-button:hover {
+    background-color: darkblue;
+  }
+
+  .container {
+    margin: auto;
+    width: 50%;
+  }
+
+  .form-container {
+    margin: auto;
+    width: 80%;
+    /* Set the width of the form container to 80% */
+    max-width: 500px;
+    /* Add a maximum width to the form container */
+    background-color: #ffffff;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1B4DFF;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    /* Center the contents of the form container */
+  }
+
+  .layout {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 128px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+  }
+
+  /* cards */
+  .card-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 12px;
+
+    width: 328px;
+    height: 360px;
+
+    /* Colors/Primary/Primary/25 */
+    background: #F2F5FF;
+    /* Shadow / md */
+    box-shadow: 0px 4px 8px -2px rgba(45, 54, 67, 0.08), 0px 2px 4px -2px rgba(45, 54, 67, 0.06);
+    border-radius: 16px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+  }
+
+  /* More like this to card */
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 52px;
+    margin: 0 auto;
+  }
+
+  /* Gap between cards (horizontal) */
+  .card-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 104px;
+
+    width: 1192px;
+    height: 338px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+</style>
+
+<div class="background" style="padding-top: 35px;">
+  <div class="background-rectangle">
+    <div class="image-div">
+      <img src={{res.image_url}} class="image" alt="Event Thumbnail">
+    </div>
+    <div class="container" style="margin-left: 50px;">
+      <h3 style="color: #042BB2; margin-left: -30px;" class="row"><strong>{{res.title}}</strong></h3>
+      <div style="background-color: #4A72FF; height: 1px; width:565px ; margin-left: -28px; margin-bottom: 30px;"></div>
+      {% if res.is_sold == False %}
+      <h5 style="color: green; margin-left: -30px;">Available</h5>
+      {% endif %}
+      {% if res.is_sold %}
+      <h5 style="color: red; margin-left: -30px;">Sold</h5>
+      {% endif %}
+      <div class="row">
+        <div class="row mt-2" style="gap: 20px;">
+          <div class="column mt-2">
+            <h6 style="color: #4A72FF;">Ticket Detail</h2>
+              <h6>
+                <img src="https://i.ibb.co/QmYB9L6/image-10-2.png">
+                {{res.category}}
+              </h6>
+              <h6>
+                <img src="https://i.ibb.co/JzRQGfb/image-12.png">
+                {{res.venue}}
+              </h6>
+              <h6>
+                <img src="https://i.ibb.co/H4MTQXN/date.png">
+                {{res.date}}
+              </h6>
+          </div>
+
+          <div class="column mt-2">
+            <h6 style="color: #4A72FF;">Seller Detail</h2>
+              {% if res.is_public %}
+              <h6>
+                <img src="https://i.ibb.co/PtH8pND/image-1.png">
+                {{sellerinfo.first_name}} {{sellerinfo.last_name}} ({{sellerinfo.username}})</h6>
+              <h6>
+                <img src="https://i.ibb.co/cxrRgY9/image-15.png">
+                {{sellerinfo.email}}
+              </h6>
+              <h6>
+                <img src="https://i.ibb.co/R239s5L/image-14.png ">
+                Phone Number : {{sellerinfo.tel_number}}
+              </h6>
+              {% endif %}
+              {% if res.is_public == False %}
+              <h6 style="color: red; font-weight: bold;">This listing is private</h6>
+              <h6 style="color: red;">Therefore the seller details are hidden.</h6>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      {% if res.seller_username != username %}
+      {% csrf_token %}
+      <div style="margin-left: -30px;">
+        <div id="message" style="font-weight: bold;">Input Token to Verify this Listing
+          <img src="https://i.ibb.co/L8VyhTN/tooltip-1-1.png" alt="My image" width="16px" height="16px"
+            class="ml-1 mb-1" data-toggle="tooltip"
+            title="Token can only be generated by sellers. Please contact the seller to request token.">
+        </div>
+
+        <input type="text" id="token-input"
+          style="width: 350px; height: 40px; font-size: 16px; border-radius: 5px; border-width: 1px;">
+        <button onclick="validateToken()" id="validate-button" class="my-button" style="width: 170px;">Validate
+          Token</button>
+      </div>
+      {% endif %}
+      <script>
+        function validateToken() {
+          var token_box = document.getElementById("token-input");
+          var validateButton = document.getElementById("validate-button");
+
+          if (token_box.value.trim() === "") {
+            validateButton.disabled = true;
+            validateButton.style.backgroundColor = "gray"; // set button color to gray when disabled
+          } else {
+            validateButton.disabled = false;
+            validateButton.style.backgroundColor = ""; // clear button color when enabled
+          }
+
+          var token = token_box.value;
+          var message = document.getElementById("message");
+          message.style.color = "black";
+          message.innerHTML = "Validating...";
+          validateButton.disabled = true; // disable the button while processing the request
+          validateButton.style.backgroundColor = "gray"; // set button color to gray when disabled
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+              var response = JSON.parse(xhr.responseText);
+              var message = document.getElementById("message");
+              message.innerHTML = "";
+              token_box.value = "";
+              if (response.is_valid_token) {
+                message.style.color = "green";
+                message.style.fontSize = "20px";
+                message.innerHTML = "Listing Validated!";
+                token_box.style.display = "none";
+                validateButton.style.display = "none";
+              } else {
+                message.style.color = "red";
+                message.innerHTML = "Token is not valid!";
+                validateButton.disabled = false; // enable the button if validation fails
+                validateButton.style.backgroundColor = ""; // clear button color when enabled
+              }
+              validateButton.disabled = true; // disable the button after validation is complete
+              validateButton.style.backgroundColor = "gray"; // set button color to gray when disabled
+            }
+          };
+          xhr.open("POST", "{% url 'validate_token' %}");
+          var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.send(JSON.stringify({
+            'token': token,
+            'id': '{{res.id}}'
+          }));
+        }
+
+        var token_box = document.getElementById("token-input");
+        var validateButton = document.getElementById("validate-button");
+        validateButton.disabled = true; // disable the button by default
+        validateButton.style.backgroundColor = "gray"; // set button color to gray when disabled
+        token_box.addEventListener("input", function () {
+          if (token_box.value.trim() === "") {
+            validateButton.disabled = true;
+            validateButton.style.backgroundColor = "gray"; // set button color to gray when disabled
+          } else {
+            validateButton.disabled = false;
+            validateButton.style.backgroundColor = ""; // clear button color when enabled
+          }
+        });
+
+        $(document).ready(function () {
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+      </script>
+    </div>
+  </div>
+
+  {% if res.seller_username == username %}
+  <div class="container">
+    <h3 style="margin-bottom: 10px; margin-top:50px; font-weight: bold; text-align: center;">Edit Listing</h3>
+  </div>
+  <div class="form-container">
+    <form method="post" action="{% url 'change_availability' %}">
+      {% csrf_token %}
+      <input type="hidden" name="listing_id" value="{{ res.id }}">
+      <input type="hidden" name="vis_string" value="{% if res.is_sold %}true{% else %}false{% endif %}">
+      <div class="custom-control custom-switch" style="margin-bottom: 10px;">
+        <input type="checkbox" class="custom-control-input" id="availabilitySwitch" name="availabilitySwitch"
+          {% if res.is_sold %}checked{% endif %}>
+        <label class="custom-control-label" for="availabilitySwitch">Mark listing as sold</label>
+      </div>
+    </form>
+
+    <form method="post" action="{% url 'change_visibility' %}">
+      {% csrf_token %}
+      <input type="hidden" name="listing_id" value="{{ res.id }}">
+      <input type="hidden" name="vis_string" value="{% if res.is_public %}false{% else %}true{% endif %}">
+      <div class="custom-control custom-switch" style="margin-bottom: 10px;">
+        <input type="checkbox" class="custom-control-input" id="visibilitySwitch" name="visibilitySwitch"
+          {% if res.is_public %}checked{% endif %}>
+        <label class="custom-control-label" for="visibilitySwitch">Make listing visible to everyone</label>
+      </div>
+    </form>
+
+    <form method="post" action="{% url 'make_token' %}">
+      {% csrf_token %}
+      <input type="hidden" name="listing_id" value="{{ res.id }}">
+      <button id="generate-token-btn" type="submit" class="my-button" style="margin-bottom: 20px;">Generate New
+        Token</button>
+      <p id="generating-token-msg" style="display: none; font-weight: bold;">Generating Token...</p>
+    </form>
+    {% if tokens|length != 0 %}
+    <h6 style="color: #6083ff;">List of active tokens:</h6>
+    {% endif %}
+    {% for i in tokens %}
+    <h7 style="color:rgb(0, 0, 0);">{{ i.token }}</h7>
+    <br>
+    {% endfor %}
+
+  </div>
+
+  <br>
+  <br>
+  <br>
+
+  <script>
+    var generateTokenBtn = document.getElementById('generate-token-btn');
+    var generatingTokenMsg = document.getElementById('generating-token-msg');
+
+    generateTokenBtn.addEventListener('click', function () {
+      generateTokenBtn.style.display = 'none';
+      generatingTokenMsg.style.display = 'block';
+    });
+
+    const availabilitySwitch = document.getElementById('availabilitySwitch');
+    const availabilityVisStringInput = document.querySelector('input[name="vis_string"]');
+
+    availabilitySwitch.addEventListener('change', function () {
+      if (availabilitySwitch.checked) {
+        availabilityVisStringInput.value = 'true';
+      } else {
+        availabilityVisStringInput.value = 'false';
+      }
+
+      this.closest('form').submit();
+    });
+
+    const visibilitySwitch = document.getElementById('visibilitySwitch');
+    const visibilityVisStringInput = document.querySelector('input[name="vis_string"]');
+
+    visibilitySwitch.addEventListener('change', function () {
+      if (visibilitySwitch.checked) {
+        visibilityVisStringInput.value = 'true';
+      } else {
+        visibilityVisStringInput.value = 'false';
+      }
+
+      this.closest('form').submit();
+
+    });
+  </script>
+  {% endif %}
+</div>
+
+{% if res.seller_username != username %}
+<div class="card-container" style="margin-left: 370px; margin-top: 100px;">
+  <h3><strong>More Like This</strong></h3>
+  <div class="card-row" style="margin-top: -25px;">
+
+    {% for j in cards %}
+    <!-- card row -->
+    <a href="/listing/{{j.id}}" style="text-decoration: none;">
+      <div class="card-column">
+        <div class="card-content">
+          <img src={{j.image_url}} class="image" style="width: 288px; height: 144px;">
+          <div class="column mt-2" style="padding-top: 12px; padding-bottom: 20px;">
+            <h4 style="color: #3D4A5C;"><strong>{{j.title}}</strong></h4>
+            <h6>
+              <img src="https://i.ibb.co/PtH8pND/image-1.png">
+              {{j.seller_username}}
+            </h6>
+            <h6>
+              <img src="https://i.ibb.co/QmYB9L6/image-10-2.png">
+              {{j.category}}
+            </h6>
+            <h6>
+              <img src="https://i.ibb.co/JzRQGfb/image-12.png">
+              {{j.venue}}
+            </h6>
+            <h6>
+              <img src="https://i.ibb.co/H4MTQXN/date.png">
+              {{j.date}}
+            </h6>
+            </h6>
+            <h6 style="color:green; font-weight: bold;">
+              <img src="https://i.ibb.co/9cL1dJF/verified.png">
+              Verified
+            </h6>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!-- card row -->
+    {% endfor %}
+
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Hub</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <style>
+      .container {
+        height: 600px; /* Set a height for the container */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .content {
+        background-color: white;
+        border-radius: 30px;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+        padding: 50px;
+        text-align: center; /* Optional: center the content horizontally */
+        border: 1px solid #1B4DFF;
+      }
+
+      h1, h4 {
+        margin: 0;
+      }
+
+      button {
+        display: inline-block;
+        background-color: #1B4DFF;
+        color: white;
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: none;
+        width: 200px;
+        margin: 10px;
+      }
+
+      button:hover {
+        background-color: #4D90FE; /* Change the background color when hovering */
+        cursor: pointer; /* Change the cursor to a pointer when hovering */
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="content">
+        <h1>Welcome to the Admin Hub, <strong>{{ username }}</strong>.</h1>
+        <h4>This is a portal for all Admin duties.</h4>
+        <br>
+        <br>
+        <br>
+        <br>
+        <button onclick="window.location.href='/admin/seller-verification'">Seller Verification</button>
+        <button onclick="window.location.href='/admin/listing-verification'">Listing Verification</button>
+        <button onclick="window.location.href='/admin/events'">Events</button>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+{% endblock %}

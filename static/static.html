@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="https://i.ibb.co/DwRngN7/icon-removebg-preview-1.png" type="image/png">
+    <title id="title"></title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: -0.02rem;
+      padding-top: 72px;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- <h1>{{has_username}}</h1> -->
+    <nav class="navbar navbar-expand-lg fixed-top" style="padding-right: 100px; background-color: white;">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ml-auto mb-1 mb-lg-0 mt-2" style="font-size: 13px;">
+                    {% if has_username %} 
+                    <li class="nav-item mr-5">
+                      <a class="nav-link" style="color:black" href="/upload/listing-documents" id="nav-tiket"><strong>Sell Your Ticket</strong></a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item mr-5">
+                      <a class="nav-link" style="color:black" href="/upload/verification-documents" id="nav-tiket"><strong>Verify your account</strong></a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item ml-5 mr-5">
+                        <a class="nav-link" style="color:black" href="/" id="nav-home"><strong>Home</strong></a>
+                    </li>
+                    <li class="nav-item ml-5 mr-5">
+                      <a class="nav-link" style="color:black" href="/events" id="nav-event"><strong>Explore Events</strong></a>
+                    </li>
+                    {% if has_username %}
+                    <li class="nav-item ml-5 mr-5">
+                      <a class="nav-link" style="color:black" href="/profile" id="nav-profile"><strong>Profile</strong></a>
+                    </li> 
+                    <li class="nav-item ml-5 mr-5">
+                      <a class="nav-link" style="color:black" href="/signin/logout"><strong>Sign out</strong></a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item ml-5 mr-5">
+                      <a class="nav-link" style="color:black" href="/signin" id="nav-signin"><strong>Sign In</strong></a>
+                    </li>
+                    <li class="nav-item ml-5 mr-5">
+                      <a class="nav-link" style="color:black" href="/signup" id="nav-signup"><strong>Sign Up</strong></a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

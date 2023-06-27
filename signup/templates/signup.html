@@ -1,0 +1,227 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+
+<style>
+  .container-form{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 20px 24px -4px rgba(45, 54, 67, 0.04), 0px 8px 11px -4px rgba(45, 54, 67, 0.04);
+    border-radius: 16px;
+    width: 450px;
+    /* height: 450px; */
+    padding: 28px;
+    /* gap: 36px; */
+
+    background: #FFFFFF;
+    /* Colors/Primary/Primary/200 */
+
+    border: 1px solid #94ABFF;
+    /* Shadow/lg */
+  }
+  .background{
+    position: relative;
+  }
+  .background-overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .password-container {
+  position: relative;
+}
+
+.password-container i {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  cursor: pointer;
+}
+
+</style>
+
+<div class="background">
+  <div class="background-overlay">
+    <svg width="559" height="870" viewBox="0 0 559 870" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30.5821 -261.004C235.03 -234.44 478.043 238.817 546 530C648.029 1374.69 92.3303 863.828 -112.117 837.264C-486.018 721.623 -138.945 495.476 -112.117 289C-85.2897 82.5242 -173.865 -287.569 30.5821 -261.004Z" fill="url(#paint0_radial_64_9884)"/>
+      <defs>
+      <radialGradient id="paint0_radial_64_9884" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(166.043 336.061) rotate(46.5322) scale(449.099 735.388)">
+      <stop stop-color="#B4C4FF"/>
+      <stop offset="1" stop-color="#B4C4FF" stop-opacity="0"/>
+      </radialGradient>
+      </defs>
+      </svg>
+  </div>
+  <div class="container" style="padding-top: 100px;padding-left: 60px;">
+    <div class="row gx-10 mt-2" style="gap: 100px">
+      <!-- Content Form -->
+      <div class="col">
+        <img src="https://i.ibb.co/DwRngN7/icon-removebg-preview-1.png" alt="My image" height="400px" width="400px">
+        <div class="mr-3 mt-4" style="padding-top: 30px">
+          <h3 class="h3" style="color:#042BB2"><strong>Sign up to get the full benefits!</strong></h3>
+          <p class="h6" style="line-height: 1.5rem;">Register to utilize the most out of our website with only a few simple steps!</p>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <div class="col ml-5 ">
+          <!-- <img class="mx-auto d-block" src="{% static 'signin/icon.svg' %}" alt="My image" height="70px" width="70px" > -->
+          <div class="container-form " style="border-radius: 2rem; width: 475px;">
+            <div class="align-items-center" width="100px" id="form">
+              {% if msg %}
+              <div class="alert alert-danger mt-2" role="alert" style="height: 45px; font-size: 14px;">
+                {{ msg }}
+              </div>
+              {% endif %}
+              <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                  <div class="row">
+                    <div class="col">
+                      <!-- First Name -->
+                      <div class="form-group mt-3 mb-2">
+                        <label class="form-label" for="formFirstName">First Name</label>
+                        <input type="text" name="f_name" required id="formFirstName" class="form-control"
+                          placeholder="John"/>
+                      </div>
+                      <div class="invalid-feedback">
+                        Please fill the required field.
+                      </div>
+                    </div>
+                    <!-- Last Name -->
+                    <div class="col">
+                      <div class="form-group mt-3 mb-2">
+                        <label class="form-label" for="formLastName">Last Name</label>
+                        <input type="text" name="l_name" required id="formLastName" class="form-control"
+                          placeholder="Smith"/>
+                      </div>
+                      <div class="invalid-feedback">
+                        Please fill the field with a valid data.
+                      </div>
+                    </div>
+                  </div>
+                    <!-- Username input -->
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="formUsername">Username</label>
+                      <input type="text" name="username" required id="formUsername" class="form-control"
+                        placeholder="JohnSmith"/>
+                      <div class="invalid-feedback">
+                        Please fill the field with a valid data.
+                      </div>
+                    </div>
+                    <!-- Email input -->
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="formEmail">Email</label>
+                      <input type="email" name="email" required id="formEmail" class="form-control"
+                        placeholder="john_smith@mybiz.com"/>
+                      <div class="invalid-feedback">
+                        Please fill the field with a valid data.
+                      </div>
+                    </div>
+                    <!-- Phone Number Input -->
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="formPhone">Phone Number</label>
+                      <input type="number" name="tel_num" required id="formPhone" class="form-control"
+                        placeholder="081287237281"/>
+                      <div class="invalid-feedback">
+                        Please fill the field with a valid data.
+                      </div>
+                    </div>
+                    <!-- Password Input -->
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="formPassword1">Password</label>
+                      <div class="password-container">
+                      <input type="password" name="password1" required id="formPassword1" class="form-control"
+                        placeholder="Must have at least 8 characters"/>
+                      <div class="invalid-feedback">
+                        Please fill the field with a valid data.
+                      </div>
+                      </div>
+                    </div>
+                    <p style="font-size: 13px;"><em class="far fa-eye" id="togglePassword" style="cursor: pointer;"></em>  Show Password</p>
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="formPassword2">Confirm Password</label>
+                      <div class="password-container">
+                      <input type="password" name="password2" required id="formPassword2" class="form-control"
+                        placeholder="Must have at least 8 characters"/>
+                      <div class="invalid-feedback">
+                        Please fill the field with a valid data.
+                      </div>
+                      <div class="invalid-feedback" id="error-password">
+                        Password doesn't match.
+                      </div>
+                      </div>
+                    </div>
+                <div class="text-center text-lg-start mt-5 mb-5">
+                  <button type="submit" class="btn btn-primary mt-1 mb-3" style="background-color:#214be4" id="button"><span style="font-size:smaller;">Sign Up</span></button>
+                  <p class="small font-weight-bold mt-2 pt-1 mb-1">Already registered?</p> 
+                  <a type="button" href="/signin/">Sign In</a>
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const navsignup = document.getElementById('nav-signup')
+  const contentSignin = document.getElementById('form')
+  const button = document.getElementById('button')
+  const togglePassword = document.getElementById('togglePassword');
+  const password = document.getElementById('formPassword1');
+  const confirmPassword = document.getElementById('formPassword2');
+  const errorPassword = document.getElementById('error-password')
+
+  navsignup.style.color = "#3044ff";
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+
+  (function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+
+  $(document).ready(function() {
+  $('#formPassword2').keyup(function() {
+    var password1 = $('#formPassword1').val();
+    var password2 = $('#formPassword2').val();
+
+    if(password1 != password2) {
+      $('#error-password').show();
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    else {
+      $('#error-password').hide();
+    }
+  });
+});
+</script>
+{% endblock %}
+
+

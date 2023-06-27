@@ -1,0 +1,353 @@
+{% extends 'static.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .container {
+    margin-top: 50px;
+  }
+
+  .carousel {
+    max-width: 1039px;
+    height: 427px;
+    margin: auto;
+    border-radius: 12px;
+  }
+
+  .carousel-inner {
+    text-align: center;
+    border-radius: 12px;
+  }
+
+  .carousel img {
+    height: 427px;
+    width: 1039px;
+  }
+
+  .border-three {
+    max-width: 261px;
+    height: 154px;
+    background-color: #F2F5FF;
+    text-align: center;
+    border: 1px solid #94ABFF;
+    border-radius: 12px;
+  }
+
+
+  @keyframes background-overlay1 {
+  0% { transform: translate(0, -100%); }
+  25% { transform: rotate(-15deg) translate(0, 0); }
+  50% { transform: translate(0, 50%); }
+  75% { transform: rotate(15deg) translate(0, 0); }
+  100% { transform: translate(0, 100%); }
+}
+
+@keyframes background-overlay2 {
+  0% { transform: translate(0, 100%); }
+  25% { transform: rotate(15deg) translate(0, 0); }
+  50% { transform: translate(0, -50%); }
+  75% { transform: rotate(-15deg) translate(0, 0); }
+  100% { transform: translate(0, -100%); }
+}
+
+
+.background-overlay1 {
+  position: fixed;
+  width: 471px;
+  height: 471px;
+  left: -103px;
+  top: 60px;
+  animation-name: background-overlay1;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.background-overlay2 {
+  position: fixed;
+  width: 516px;
+  height: 480px;
+  left: 964px;
+  bottom: 60px;
+  animation-name: background-overlay2;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+
+  /* cards */
+  .card-content {
+    align-items: center;
+    padding: 20px;
+    gap: 12px;
+    background: #F2F5FF;
+    box-shadow: 0px 4px 8px -2px rgba(45, 54, 67, 0.08), 0px 2px 4px -2px rgba(45, 54, 67, 0.06);
+    border-radius: 16px;
+    max-width: 328px;
+  }
+
+  .card-content:hover {
+    transform: scale(1.05);
+    transition: transform 0.4s ease-in-out;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-row {
+    margin-left: 325px;
+    gap: 40px;
+    position: relative;
+  }
+
+  .overlay-container {
+    position: relative;
+  }
+
+  .card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+    border-radius: 12.6069px;
+    background-color: #F2F5FF;
+    background-clip: padding-box;
+    max-height: 100px;
+  }
+
+  .card-horizontal img{
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    overflow: hidden;
+    width: 100px;
+    min-height: 100px;
+    object-fit: cover;
+  }
+
+  .card-horizontal:hover {
+    transform: scale(1.05);
+    transition: transform 0.4s ease-in-out;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+  }
+</style>
+
+<!-- HTML -->
+<!-- background overlay -->
+<div class="background">
+  <div class="background-overlay1">
+    <img src="https://i.ibb.co/jLzhMZt/image-10.png" width="500px" height="500px">
+  </div>
+  <div class="background-overlay2">
+    <img src="https://i.ibb.co/j6HfdxK/Group-632623.png" width="600px" height="600px">
+  </div>
+</div>
+
+
+<div class="container">
+  <!-- Carousel -->
+  <div class="col" style="gap:300px">
+    <div id="carouselExampleControls" class="row carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://i.ibb.co/9brLWh3/NCT-Dream-Tour-The-Dream-Show-2-home-page-web-OK-2-1.png"
+            alt="First slide">
+        </div>
+        {% for event in discover_events %}
+        <div class="carousel-item">
+          <img src="{{ event.banner_url }}" alt="Second slide">
+        </div>
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <!-- Description -->
+    <div class="row" style="margin-top: 80px;">
+      <div class="col-2 h3" style="color:#1B4DFF; text-align: right; font-weight: bolder;">HaloCalo</div>
+      <div class="col-10">
+        <p>will protect you from ticket scams and fraud. Our platform verifies the authenticity of your concert tickets,
+          so you can enjoy the show with confidence!</p>
+      </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="row" style="margin-top: 80px;">
+      <p class="h2" style="text-align: center; font-weight: bolder; margin: auto; margin-top: 100px;">Benefits of
+        choosing our service</p>
+    </div>
+    <div class="row mb-5" style="gap: 30px; margin-left:100px ; margin-top: 50px;">
+      <div class="col border-three">
+        <svg class="mt-3" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M23.75 22.501H30M9.54824 26.2509C9.82567 25.1776 10.4518 24.2269 11.3283 23.5481C12.2048 22.8693 13.2819 22.501 14.3905 22.501M14.3905 22.501C15.4991 22.5009 16.5763 22.8692 17.4528 23.5479C18.3294 24.2266 18.9556 25.1773 19.2331 26.2506M14.3905 22.501C16.4616 22.501 18.1407 20.822 18.1407 18.751C18.1407 16.6799 16.4618 15.001 14.3907 15.001C12.3196 15.001 10.6407 16.6799 10.6407 18.751C10.6407 20.822 12.3195 22.501 14.3905 22.501ZM23.75 17.501H30M6.25001 7.50098H33.75C34.4404 7.50098 35 8.06062 35 8.75098V31.251C35 31.9413 34.4404 32.501 33.75 32.501H6.25001C5.55965 32.501 5.00001 31.9413 5.00001 31.251V8.75098C5.00001 8.06062 5.55965 7.50098 6.25001 7.50098Z"
+            stroke="#5E718D" stroke-width="2.375" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p class="mt-1"><strong>Speedy verification</strong></p>
+        <p>Our verification process only takes 3-5 business days.</p>
+      </div>
+      <div class="col border-three">
+        <svg class="mt-3" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M20 28.75C21.0355 28.75 21.875 27.9105 21.875 26.875C21.875 25.8395 21.0355 25 20 25C18.9645 25 18.125 25.8395 18.125 26.875C18.125 27.9105 18.9645 28.75 20 28.75Z"
+            fill="#5E718D" />
+          <path
+            d="M20 12.5V21.25M35 20C35 28.2843 28.2843 35 20 35C11.7157 35 5 28.2843 5 20C5 11.7157 11.7157 5 20 5C28.2843 5 35 11.7157 35 20Z"
+            stroke="#5E718D" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+        <p class="mt-1"><strong>No scammer</strong></p>
+        <p>We make sure all ticket’s on our app is legit and valid.</p>
+      </div>
+      <div class="col border-three">
+        <svg class="mt-3" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M16.6667 14.9997H13.3334M26.6667 14.9997H23.3334M3.33335 19.9997C3.33335 29.2044 10.7953 36.6663 20 36.6663C29.2048 36.6663 36.6667 29.2044 36.6667 19.9997C36.6667 10.7949 29.2048 3.33301 20 3.33301C10.7953 3.33301 3.33335 10.7949 3.33335 19.9997ZM23.3334 21.6663H16.6667V26.6663C16.6667 27.7775 17.3334 29.9997 20 29.9997C22.6667 29.9997 23.3334 27.7775 23.3334 26.6663V21.6663Z"
+            stroke="#5E718D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <p class="mt-1"><strong>Easy experience</strong></p>
+        <p>All processes in our app are easy and user-friendly.</p>
+      </div>
+    </div>
+
+    <!-- What’s New -->
+    <div class="col" style="margin-top: 200px;">
+      <p class="h2" style="font-weight: bolder;">What’s new</p>
+      <p>Experience something new and unforgettable. Check out this upcoming event!</p>
+    </div>
+    <div class="row mb-5" style="margin-top: 20px;">
+      <img src="{{events_new.overlay_img}}" alt="My image" style="position: absolute;" width="570.51px"
+        height="390px">
+      <div class="row card-row mt-4">
+        <!-- card row -->
+        {% for listing in events_new.listing %}
+        <a href="/listing/{{listing.id}}" style="text-decoration: none; color: black;">
+          <div class="card-content">
+            <img src="{{ events_new.image_url }}" class="image" style="width: 288px; height: 144px;">
+            <div class="column mt-2" style="padding-top: 12px;">
+              <h4 style="color: #3D4A5C;"><strong>{{events_new.title}}</strong></h4>
+              <h6>
+                <img src="https://i.ibb.co/QmYB9L6/image-10-2.png">
+                {{events_new.category}}
+              </h6>
+              <h6>
+                <img src="https://i.ibb.co/JzRQGfb/image-12.png">
+                {{events_new.venue}}
+              </h6>
+              <h6>
+                <img src="https://i.ibb.co/H4MTQXN/date.png">
+                {{events_new.date}}
+              </h6>
+              {% if listing.is_verified %}
+              <h6 style="color:green; font-weight: bold;">
+                <img src="https://i.ibb.co/9cL1dJF/verified.png">
+                Verified
+              </h6>
+              {% else %}
+              <h6 style="color:red; font-weight: bold;">Unverified</h6>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+
+        <!-- card row -->
+      </div>
+    </div>
+    <a href="/events/{{ events_new.title }}/listings" class="btn btn-primary mt-1 mb-3" style="background-color:#214be4" id="button"><span
+        style="font-size:smaller;">See More</span></a>
+
+    <!-- Don't Miss -->
+    <div class="col" style="margin-top: 200px;">
+      <p class="h2" style="font-weight: bolder;">Don't miss this event!</p>
+      <p>The countdown is on! Don't let this event get past you. Check out the listings for this event!</p>
+    </div>
+    <div class="row mb-5" style="margin-top: 20px;">
+      <img src="{{events_dont_miss.overlay_img}}" alt="My image" style="position: absolute;" width="570.51px"
+        height="390px">
+      <div class="row card-row mt-4">
+        <!-- card row -->
+        {% for listing in events_dont_miss.listing %}
+        <a href="/listing/{{listing.id}}" style="text-decoration: none; color: black;">
+          <div class="card-content" href="/listing/{{listing.id}}">
+            <img src="{{ events_dont_miss.image_url }}" class="image" style="width: 288px; height: 144px;">
+            <div class="column mt-2" style="padding-top: 12px;">
+              <h4 style="color: #3D4A5C;"><strong>{{events_dont_miss.title}}</strong></h4>
+              <h6>
+                <img src="https://i.ibb.co/QmYB9L6/image-10-2.png">
+                {{events_dont_miss.category}}
+              </h6>
+              <h6>
+                <img src="https://i.ibb.co/JzRQGfb/image-12.png">
+                {{events_dont_miss.venue}}
+              </h6>
+              <h6>
+                <img src="https://i.ibb.co/H4MTQXN/date.png">
+                {{events_dont_miss.date}}
+              </h6>
+              {% if listing.is_verified %}
+              <h6 style="color:green; font-weight: bold;">
+                <img src="https://i.ibb.co/9cL1dJF/verified.png">
+                Verified
+              </h6>
+              {% else %}
+              <h6 style="color:red; font-weight: bold;">Unverified</h6>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+        <!-- card row -->
+      </div>
+    </div>
+    <a href="/events/{{ events_dont_miss.title }}/listings" class="btn btn-primary mt-1 mb-3" style="background-color:#214be4" id="button"><span
+        style="font-size:smaller;">See More</span></a>
+
+    <!-- List your ticket -->
+    <div class="col" style="margin-top: 200px;">
+      <p class="h2" style="font-weight: bolder;">List your ticket!</p>
+      <p class="mb-4">You can list your ticket with an easy verification process. It only takes two simple steps!</p>
+      <a href="/profile"><img src="https://i.ibb.co/7yn3nBM/list-your-ticket.png" class="image" style="display: block; margin: 0 auto; "></a>
+    </div>
+
+    <!-- Discover events -->
+    <div class="col" style="margin-top: 200px;">
+      <p class="h2" style="font-weight: bolder;">Discover events</p>
+      <p class="mb-4">Take a peek into all of the events currently available on our platform!</p>
+
+      <div class="row gy-3 mb-5">
+        {% for event in discover_events %}
+        <div class="col-sm-6 mb-3">
+          <a href="/events/{{ event.title }}/listings" style="text-decoration: none;">
+            <div class="card-horizontal">
+              <img src="{{ event.image_url }}">
+              <div class="card-body" style="text-decoration: none;">
+                <h4 class="card-title">{{ event.title }}</h4>
+                <p class="card-text">{{ event.num_listings }} Listings</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const title = document.getElementById('title')
+  const navhome = document.getElementById('nav-home')
+
+  title.innerHTML = "Home | HaloCalo";
+  navhome.style.color = "#3044ff";
+
+  $('.carousel').carousel({
+    interval: 1, pause: "hover"
+  })
+
+  
+</script>
+{% endblock %}

@@ -1,0 +1,154 @@
+default:
+  image: ubuntu
+
+deploy_preview:
+  stage: deploy
+  only:
+    - stage
+  before_script:
+    ##
+    ## Install ssh-agent if not already installed, it is required by Docker.
+    ## (change apt-get to yum if you use an RPM-based image)
+    ##
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+
+    ##
+    ## Run ssh-agent (inside the build environment)
+    ##
+    - eval $(ssh-agent -s)
+
+    ##
+    ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    ## We're using tr to fix line endings which makes ed25519 keys work
+    ## without extra base64 encoding.
+    ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+    ##
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ##
+    ## Use ssh-keyscan to scan the keys of your private server. Replace gitlab.com
+    ## with your own domain name. You can copy and repeat that command if you have
+    ## more than one server to connect to.
+    ##
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
+    ##
+    ## Alternatively, assuming you created the SSH_SERVER_HOSTKEYS variable
+    ## previously, uncomment the following two lines instead.
+    ##
+    #- echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts
+    #- chmod 644 ~/.ssh/known_hosts
+
+    ##
+    ## You can optionally disable host key checking. Be aware that by adding that
+    ## you are suspectible to man-in-the-middle attacks.
+    ## WARNING: Use this only with the Docker executor, if you use it with shell
+    ## you will overwrite your user's SSH config.
+    ##
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - apt-get install gettext-base -y
+    - envsubst < .env.prod > .env.prodd
+    - envsubst < .env.test > .env.testt
+    - scp .env.prodd gitlab@34.128.105.151:/home/gitlab/.env.prod
+    - scp .env.testt gitlab@34.128.105.151:/home/gitlab/.env.test
+    - ssh gitlab@34.128.105.151 "export ENV='STAGE' && cd /home/gitlab && rm -rf halo-calo-app && git clone git@gitlab.cs.ui.ac.id:ppl-fasilkom-ui/2023/kelas-d/halo-calo/halo-calo-app.git && cd /home/gitlab/halo-calo-app && git switch stage && source /home/gitlab/env/bin/activate && sudo systemctl restart gunicorn"
+
+deploy_production:
+  stage: deploy
+  only:
+    - main
+  before_script:
+    ##
+    ## Install ssh-agent if not already installed, it is required by Docker.
+    ## (change apt-get to yum if you use an RPM-based image)
+    ##
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+
+    ##
+    ## Run ssh-agent (inside the build environment)
+    ##
+    - eval $(ssh-agent -s)
+
+    ##
+    ## Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+    ## We're using tr to fix line endings which makes ed25519 keys work
+    ## without extra base64 encoding.
+    ## https://gitlab.com/gitlab-examples/ssh-private-key/issues/1#note_48526556
+    ##
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+
+    ##
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    ##
+    ## Use ssh-keyscan to scan the keys of your private server. Replace gitlab.com
+    ## with your own domain name. You can copy and repeat that command if you have
+    ## more than one server to connect to.
+    ##
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
+    ##
+    ## Alternatively, assuming you created the SSH_SERVER_HOSTKEYS variable
+    ## previously, uncomment the following two lines instead.
+    ##
+    #- echo "$SSH_SERVER_HOSTKEYS" > ~/.ssh/known_hosts
+    #- chmod 644 ~/.ssh/known_hosts
+
+    ##
+    ## You can optionally disable host key checking. Be aware that by adding that
+    ## you are suspectible to man-in-the-middle attacks.
+    ## WARNING: Use this only with the Docker executor, if you use it with shell
+    ## you will overwrite your user's SSH config.
+    ##
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - apt-get install gettext-base -y
+    - envsubst < .env.prod > .env.prodd
+    - envsubst < .env.test > .env.testt
+    - scp .env.prodd gitlab@34.101.115.168:/home/gitlab/.env.prod
+    - scp .env.testt gitlab@34.101.115.168:/home/gitlab/.env.test
+    - ssh gitlab@34.101.115.168 "export ENV='PRODUCTION' && cd /home/gitlab && rm -rf halo-calo-app && git clone git@gitlab.cs.ui.ac.id:ppl-fasilkom-ui/2023/kelas-d/halo-calo/halo-calo-app.git && source /home/gitlab/env/bin/activate && cd /home/gitlab/halo-calo-app && sudo systemctl restart gunicorn"
+
+
+sonarqube-check:
+  stage: test
+  except:
+    - main
+  image:
+    name: python:3.8
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    # Install coverage and any other required packages
+    - apt-get update && apt-get install gettext-base -y
+    - pip install --no-dependencies -r requirements.txt
+    - pip install coverage
+    - envsubst < .env.prod > ../.env.prod
+    - envsubst < .env.test > ../.env.test
+    - export ENV='TEST'
+
+    # Run tests with coverage and generate XML report
+    - coverage run --source='.' manage.py test --keepdb
+    - coverage xml
+
+    # Upload coverage report to SonarQube
+    - sonar-scanner
+  allow_failure: true
